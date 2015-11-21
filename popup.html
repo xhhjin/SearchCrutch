@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html>
+<head>
+<style type="text/css">
+body {font-family:tahoma,Arial; font-size:14px; width:65px;padding:8px 12px;line-height:22px;}
+a{color:rgb(51,102,204);text-decoration:none;display:block;}
+a:hover{text-decoration:underline;}
+.disable{color:#aaa;}
+.notshow{display:none;}
+hr {width:30px;margin-left:0;color:#000;}
+</style>
+<script type="text/javascript" src="./base.js"></script>
+<script type="text/javascript">
+
+function redirect( index )
+{
+	chrome.tabs.getSelected(null,function(tab){ 
+		q ='';
+		if( localStorage["word"] )
+			q = localStorage["word"] ;
+		else
+		{
+			host = GetHost(tab.url);
+			i_host = inHostArray(host) ;
+			args = GetUrlParms(tab.url);
+			if( -1 < i_host )
+			{
+				q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
+				$('in_q').value = q;
+			}
+		}
+		if(q)
+			newurl = searchselect_array[index][1] + q;
+		else
+			newurl = searchselect_array[index][3];
+
+		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});//*/
+	});
+	chrome.extension.sendRequest({"tosearch": searchselect_array[index][0] }, function(response) {});
+	SetNowLink( index );
+}
+
+function onLoad()
+{
+	chrome.tabs.getSelected(null,function(tab){ 
+		host = GetHost(tab.url);
+		i_host = inHostArray(host) ;
+		if( -1< i_host)
+			SetNowLink( searchhost_array[i_host][1] );
+		else
+			SetNowLink( -1 );
+	});
+}
+function SetNowLink( index )
+{
+	for( i=0;i<searchselect_array.length;i++)
+	{
+		a_id = 'a_' + i ;
+		if( $( a_id) )
+		{
+			if( i == index )
+			{
+				$( a_id ).href = '#';
+				$( a_id ).className = 'disable';
+			}
+			else
+			{
+				$( a_id ).href = 'javascript:redirect(' + i + ');';
+				$( a_id ).className = '';
+			}		
+			cb_id = 'cb_' + i;
+			if( i==1 || i>3 )//those not show by default
+			{
+				$( a_id ).className = 'notshow';
+				if( localStorage[cb_id])
+				{
+					if( 'checked' == localStorage[cb_id])
+					{
+						if( i == index )
+							$( a_id ).className = 'disable';
+						else
+							$( a_id ).className = '';
+					}
+				}
+			}
+			else if( localStorage[cb_id])
+			{
+				if( 'no' == localStorage[cb_id])
+					$( a_id ).className = 'notshow';
+			}
+		}
+	}
+}
+</script>
+</head>
+<body onload="onLoad()">
+<div style="line-height:28px;margin-bottom:8px;">
+<a id="a_0" href="javascript:redirect(0);">Google</a>
+</div>
+<a id="a_1" href="javascript:redirect(1);">谷歌复原</a>
+<a id="a_2" href="javascript:redirect(2);">百度</a>
+<a id="a_3" href="javascript:redirect(3);">必应</a>
+<a id="a_5" href="javascript:redirect(5);">搜狗</a>
+<a id="a_4" href="javascript:redirect(4);">雅虎</a>
+<a id="a_6" href="javascript:redirect(6);">有道</a>
+<hr>
+<a href="./options.html" style="font-size:12px;" target="_blank">设置</a>
+<div style="display:none;">
+<input id="in_q"/>
+</div>
+</body>
+</html>
