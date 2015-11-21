@@ -21,108 +21,48 @@ a.adinfo{color:#449;margin:0 0 0 50px;text-decoration:none;};
 a.adinfo:hover{color:#22f;}
 </style>
 </head>
-<script type="text/javascript" src="./base.js"></script>
-<script type="text/javascript">
-function $(objStr){return document.getElementById(objStr);}
-// Saves options to localStorage.
-function save_options() {
-  for( i=0;i<searchselect_array.length;i++ )
-	{
-		cb_id = 'cb_' + i;
-		localStorage[ cb_id ] = $(cb_id).checked?'checked':'no';
-	}
-  var status = document.getElementById("status");
-  status.innerHTML = "选项已保存";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 1000);
-}
-
-// Restores select box state to saved value from localStorage.
-function restore_options() 
-{
-	for( i=0;i<searchselect_array.length;i++ )
-	{
-		cb_id = 'cb_' + i;
-		if( 'no' == localStorage[cb_id] )
-			$( cb_id ).checked = '';
-		if( 'checked' == localStorage[cb_id] )
-			$( cb_id ).checked = 'checked';
-	}//*/
-}
-function explain()
-{
-	if( $('div_exp').style.display == 'none' )
-	{
-		$('lb_imgg').className = 'heighup';
-		$('div_exp').style.display = '';
-	}
-	else
-	{
-		$('lb_imgg').className = '';
-		$('div_exp').style.display = 'none';
-	}
-}
-function re_close()
-{
-	if( $('div_recommend').style.display == 'none' )
-	{
-		$('div_recommend').style.display = '';
-		$('a_reclose').innerHTML = '隐藏推荐';
-	}
-	else
-	{
-		$('div_recommend').style.display = 'none';
-		$('a_reclose').innerHTML = '显示推荐';
-	}
-}
-</script>
-
-<body onload="restore_options()">
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/options.js"></script>
+<body">
 <div id="wrap">
 <div id="content">
-	<div id="heading"><img src='gcrutch.48.gif' /><h1>"Google搜索拐杖" 已安装 - 选项</h1></div>
+	<div id="heading"><img src='img/icon-48.png' /><h1>"Google搜索拐杖" 已安装 - 选项</h1></div>
 	<div id="options">
 	<div style="float:left;width:260px;">
 	Google不通时，快捷切换其他搜索！<br>
 	<p>只显示我想切换的搜索：</p>
 	<input type="checkbox" id="cb_0" checked="checked" disabled="true"/><label for="cb_0">Google</label><br>
-	<input type="checkbox" id="cb_1" onclick="save_options();" /><label id="lb_imgg"  for="cb_1">谷歌复原(Google IM)</label>&nbsp;&nbsp;<a href="javascript:explain();">(?)</a><br>
+	<input type="checkbox" id="cb_1" /><label id="lb_imgg"  for="cb_1">谷歌复原(Google IM)</label>&nbsp;&nbsp;<a href="javascript:explain();">(?)</a><br>
 	<div id="div_exp" style="display:none;" class="heighup">&nbsp;<a href="http://www.google.com.im" target="_blank">提供稳定Google搜索的个人网站</a>&nbsp;现其搜索引用页无法直接打开，可用本扩展重试直接访问<a href="http://www.kkksou.com/product/gc_help.html" target="_blank">(?)</a></div>
-	<input type="checkbox" id="cb_2" onclick="save_options();" checked="checked"/><label for="cb_2">百度</label><br>
-	<input type="checkbox" id="cb_3" onclick="save_options();" checked="checked"/><label for="cb_3">必应</label><br>
-	<input type="checkbox" id="cb_5" onclick="save_options();"/><label for="cb_5">搜狗</label><br>
-	<input type="checkbox" id="cb_4" onclick="save_options();"/><label for="cb_4">雅虎</label><br>
-	<input type="checkbox" id="cb_6" onclick="save_options();"/><label for="cb_6">有道</label><br>
+	<input type="checkbox" id="cb_2" checked="checked"/><label for="cb_2">百度</label><br>
+	<input type="checkbox" id="cb_3" checked="checked"/><label for="cb_3">必应</label><br>
+	<input type="checkbox" id="cb_5" /><label for="cb_5">搜狗</label><br>
+	<input type="checkbox" id="cb_4" /><label for="cb_4">雅虎</label><br>
+	<input type="checkbox" id="cb_6" /><label for="cb_6">有道</label><br>
 	<div style="margin-top:5px;">辅助小功能：</div>
 	<input type="checkbox" id="cb_gr" checked="checked" disabled="true"/><label for="cb_gr">支持Google Reader切换HTTP/HTTPS</label><br>
 	<input type="checkbox" id="cb_dref" checked="checked" disabled="true"/><label for="cb_dref">支持Google引用页重试直接访问</label>&nbsp;&nbsp;
 	<a href="http://www.kkksou.com/product/gc_help.html" target="_blank">(?)</a>
 	<div id="status"></div>
 	</div>
-	<div style="float:right;margin-top:4px;"><img src='gc_show.png' /><br>
+	<div style="float:right;margin-top:4px;"><img src='SearchCrutch.png' /><br>
 	</div>
 	</div>
 	<!-- JiaThis Button BEGIN -->
-	<div id="jiathis_style_32x32" style="margin-top:15px;">
+	<div class="jiathis_style_32x32">
 		<span style="float:left;font-size:14px;margin:6px 10px 0 0;">分享到</span>
-		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_qzone"></a>
 		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_tqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
 		<a class="jiathis_button_renren"></a>
 		<a class="jiathis_button_fanfou"></a>
-		<a class="jiathis_button_qzone"></a>
-		<a class="jiathis_button_kaixin001"></a>
-		<a href="http://www.jiathis.com/share/?uid=1503329" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+		<a class="jiathis_button_fanfou"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+		<a class="jiathis_counter_style"></a>
 	</div>
-	<script type="text/javascript">
-	var jiathis_config = {
-	"data_track_clickback":true,
-	url: "http://www.kkksou.com/product/gc.html",
-	title: '挺有用的Chrome扩展“Google搜索拐杖”:Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉,用这个方便多了。'};
-	</script>
-	<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js?uid=1503329" charset="utf-8"></script>
-	<!-- JiaThis Button END --> 
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 	<div style="text-align:right;line-height:20px;font-size:10px;">反馈建议：google@kkksou.com<br><a href="http://www.kkksou.com" target="_blank">KKKSou</a> 出品</div>
 </div>
 </div>  
@@ -134,4 +74,5 @@ function re_close()
 </div>
 </div>    
 </body>
+<script type="text/javascript" src="js/saveoptions.js"></script>
 </html>

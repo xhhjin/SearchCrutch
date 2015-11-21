@@ -1,12 +1,13 @@
 ﻿{
-  "name": "Google搜索拐杖",
-  "version": "2.3",
-  "description": "如果Google搜索不通，快捷切换到其他搜索。Google抽风我帮忙！",
+  "name": "搜索拐杖",
+  "version": "3.0",
+  "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输！",
   "update_url": "http://www.kkksou.com/product/gc_update.xml",
-  "background_page": "background.html",
+  "background" : { "scripts": ["js/background.js", "js/base.js"] },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "page_action" :
   {
-    "default_icon" : "gcrutch.19.gif",
+    "default_icon" : "img/icon-16.png",
     "default_title" : "点此切换搜索",
 	"default_popup": "popup.html"
   },
@@ -20,33 +21,35 @@
         "http://www.google.com.hk/*",
 		"http://www.google.com/*"
       ],
-      "js" : ["toGoogleFinish.js","sendword.js"],
+      "js" : ["js/toGoogleFinish.js","js/sendword.js"],
       "run_at" : "document_end"
     },
 	{
       "matches" : [
         "http://www.baidu.com/*"
       ],
-      "js" : ["toBaidu.js","sendword.js"],
+      "js" : ["js/toBaidu.js","js/sendword.js"],
       "run_at" : "document_end"
     },
 	{
       "matches" : [
         "http://www.sogou.com/*"
       ],
-      "js" : ["toSogou.js","sendword.js"],
+      "js" : ["js/toSogou.js","js/sendword.js"],
       "run_at" : "document_end"
     },
 	{
       "matches" : [
         "http://www.yahoo.cn/*","http://www.youdao.com/*"
       ],
-      "js" : ["toYahoo.js","sendword.js"],
+      "js" : ["js/toYahoo.js","js/sendword.js"],
       "run_at" : "document_end"
     }
   ],
   "icons" : {
-    "48" : "gcrutch.48.gif",
-    "128" : "gcrutch.128.png"
-  }
+    "16" : "img/icon-16.png",
+    "48" : "img/icon-48.png",
+    "128" : "img/icon-128.png"
+  },
+  "manifest_version": 2
 }
