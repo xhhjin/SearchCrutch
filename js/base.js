@@ -44,6 +44,8 @@ function GetUrlParms(hrefstr)
 {
 	var args=new Object();
 	pos = hrefstr.indexOf("?");
+	if( 0 > pos)
+		pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
 	if( 0 < pos)
 	{
 		query = hrefstr.substring(pos+1);
