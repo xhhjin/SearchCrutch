@@ -19,7 +19,7 @@
 	{
       "matches" : [
         "http://www.google.com.hk/*",
-		"http://www.google.com/*"
+	"http://www.google.com/*"
       ],
       "js" : ["js/toGoogleFinish.js","js/sendword.js"],
       "run_at" : "document_end"
@@ -40,9 +40,16 @@
     },
 	{
       "matches" : [
-        "http://www.yahoo.cn/*","http://www.youdao.com/*"
+        "http://search.yahoo.com/*"
       ],
       "js" : ["js/toYahoo.js","js/sendword.js"],
+      "run_at" : "document_end"
+    },
+    {
+      "matches" : [
+        "http://www.haosou.com/*"
+      ],
+      "js" : ["js/tohaosou.js","js/sendword.js"],
       "run_at" : "document_end"
     }
   ],

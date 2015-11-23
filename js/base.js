@@ -1,37 +1,35 @@
 ﻿function $(objStr){return document.getElementById(objStr);}
-search_array =['google','baidu','bing','yahoo','sogou','youdao'];
-//var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.youdao.com'];
+search_array =['google','baidu','bing','yahoo','sogou','haosou'];
+//var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.haosou.com'];
 
 // var qstr_array={};
 // qstr_array['google'] = 'q';
 // qstr_array['baidu'] = 'wd';
 // qstr_array['bing'] = 'q';
-// qstr_array['yahoo'] = 'q';
+// qstr_array['yahoo'] = 'p';
 // qstr_array['sogou'] = 'query';
-// qstr_array['youdao'] = 'q';
+// qstr_array['haosou'] = 'q';
 
 var searchselect_array = 
 [
 	['Google','http://www.google.com.hk/search?hl=zh-CN&newwindow=1&q=','q','http://www.google.com.hk'],
-	['Im Google','http://search.myrevery.com/search?hl=zh-CN&newwindow=1&q=','q','http://www.google.com.im'],
+	['AOL Search','http://www.aolsearch.com/search?q=','q','http://www.aolsearch.com'],
 	['百度','http://www.baidu.com/s?wd=','wd','http://www.baidu.com'],
 	['必应','http://cn.bing.com/search?q=','q','http://cn.bing.com'],
-	['雅虎','http://www.yahoo.cn/s?q=','q','http://www.yahoo.cn'],
+	['雅虎','http://search.yahoo.com/search?p=','p','http://search.yahoo.com'],
 	['搜狗','http://www.sogou.com/web?query=','query','http://www.sogou.com'],
-	['有道','http://www.youdao.com/search?q=','q','http://www.youdao.com'],
+	['好搜','http://www.haosou.com/s?q=','q','http://www.haosou.com'],
 ];
 var searchhost_array =
 [
 	['www.google.com',0],
 	['www.google.com.hk',0],
-	['www.google.com.im',1],
-	['search.myrevery.com',1],
-	['myrevery.com',1],
+	['www.aolsearch.com',1],
 	['www.baidu.com',2],
 	['cn.bing.com',3],
-	['www.yahoo.cn',4],
+	['search.yahoo.com',4],
 	['www.sogou.com',5],
-	['www.youdao.com',6]
+	['www.haosou.com',6]
 ];
 function inHostArray(host)
 {

@@ -1,1 +1,1 @@
-﻿input_wd = document.getElementsByName('q');
+﻿input_wd = document.getElementsByName('p');
