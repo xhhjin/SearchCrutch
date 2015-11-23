@@ -2,4 +2,4 @@
 	word = input_wd[0].value;
 else
 	word = '';
-chrome.extension.sendRequest({"search":word}, function(response) {});
+chrome.runtime.sendMessage({"search":word}, function(response) {});

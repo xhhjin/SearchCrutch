@@ -36,6 +36,6 @@ function redirect( index )
 
 		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});//*/
 	});
-	chrome.extension.sendRequest({"tosearch": searchselect_array[index][0] }, function(response) {});
+	chrome.runtime.sendMessage({"tosearch": searchselect_array[index][0] }, function(response) {});
 	SetNowLink( index );
 }
