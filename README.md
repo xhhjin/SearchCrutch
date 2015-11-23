@@ -10,4 +10,4 @@
 5, 支持Google引用页重试直接访问(新)(?)。
 
 ## 安装地址：
-Chrome应用商店：[点击安装](https://chrome.google.com/webstore/search/搜索拐杖?hl=zh-CN)
+Chrome应用商店：[点击安装](https://chrome.google.com/webstore/detail/%E6%90%9C%E7%B4%A2%E6%8B%90%E6%9D%96/bgenmocoeejdpobiakjlppafcdimnfho?hl=zh-CN)
