@@ -12,7 +12,7 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 	if( -1 < tab.url.substr(7,25).indexOf('www.google.com/reader') )
 	{
 		chrome.pageAction.setPopup({popup:'',tabId: tabId});
-		chrome.pageAction.setIcon({path:'img/icon-16-b.png',tabId: tabId});
+		chrome.pageAction.setIcon({path:'img/icon-38-b.png',tabId: tabId});
 		chrome.pageAction.setTitle({title:'一键切换HTTP/HTTPS',tabId: tabId});
 		chrome.pageAction.show(tabId);
 		return;
@@ -25,7 +25,7 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 		if( (1==searchhost_array[i_host][1] || 0 == searchhost_array[i_host][1] ) && ( 10 < tab.url.indexOf('url?') || 10 < tab.url.indexOf('imgres?') ) )
 		{
 			chrome.pageAction.setPopup({popup:'',tabId: tabId});
-			chrome.pageAction.setIcon({path:'img/icon-16-g.png',tabId: tabId});
+			chrome.pageAction.setIcon({path:'img/icon-38-g.png',tabId: tabId});
 			chrome.pageAction.setTitle({title:'直接访问所在网页',tabId: tabId});
 			chrome.pageAction.show(tabId);
 			return;

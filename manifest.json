@@ -7,9 +7,12 @@
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "page_action" :
   {
-    "default_icon" : "img/icon-16.png",
+    "default_icon": {
+         "19": "img/icon-19.png",
+         "38": "img/icon-38.png"
+      },
     "default_title" : "点此切换搜索",
-	"default_popup": "popup.html"
+    "default_popup": "popup.html"
   },
   "permissions" : [
     "tabs","*://*/*"
@@ -55,7 +58,9 @@
   ],
   "icons" : {
     "16" : "img/icon-16.png",
+    "32" : "img/icon-32.png",
     "48" : "img/icon-48.png",
+    "64" : "img/icon-64.png",
     "128" : "img/icon-128.png"
   },
   "manifest_version": 2
