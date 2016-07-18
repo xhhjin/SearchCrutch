@@ -1,6 +1,6 @@
 ﻿function $(objStr){return document.getElementById(objStr);}
 search_array =['google','baidu','bing','yahoo','sogou','haosou'];
-//var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.haosou.com'];
+//var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.so.com'];
 
 // var qstr_array={};
 // qstr_array['google'] = 'q';
@@ -18,7 +18,7 @@ var searchselect_array =
 	['必应','http://cn.bing.com/search?q=','q','http://cn.bing.com'],
 	['雅虎','http://search.yahoo.com/search?p=','p','http://search.yahoo.com'],
 	['搜狗','http://www.sogou.com/web?query=','query','http://www.sogou.com'],
-	['好搜','http://www.haosou.com/s?q=','q','http://www.haosou.com'],
+	['360搜索','http://www.so.com/s?q=','q','http://www.so.com'],
 ];
 var searchhost_array =
 [
@@ -29,7 +29,7 @@ var searchhost_array =
 	['cn.bing.com',3],
 	['search.yahoo.com',4],
 	['www.sogou.com',5],
-	['www.haosou.com',6]
+	['www.so.com',6]
 ];
 function inHostArray(host)
 {

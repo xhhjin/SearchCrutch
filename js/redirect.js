@@ -4,7 +4,7 @@ document.getElementById('a_2').addEventListener('click',CheckRedirect);		//百�
 document.getElementById('a_3').addEventListener('click',CheckRedirect);		//必应
 document.getElementById('a_4').addEventListener('click',CheckRedirect);		//雅虎
 document.getElementById('a_5').addEventListener('click',CheckRedirect);		//搜狗
-document.getElementById('a_6').addEventListener('click',CheckRedirect);		//好搜
+document.getElementById('a_6').addEventListener('click',CheckRedirect);		//360搜索
 
 function CheckRedirect( )
 {
