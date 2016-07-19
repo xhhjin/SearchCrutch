@@ -33,16 +33,21 @@ var searchhost_array =
 ];
 function insertCustomArray()
 {
+	if( search_array.length > 6 )	// 判断是否需要插入自定义搜索
+		return;
 	var insert_array = 'custom';
-	var custom_search = localStorage['custom_search'];
+	var custom_search = localStorage['custom_search'];	
 	search_array.push(insert_array);
 	insert_array = [GetHost(custom_search), 7];
 	searchhost_array.push(insert_array);
 	var qstr_array = 'q';
 	var regexp = /[#?&]\w{1,5}=/g;
 	qstr_array = custom_search.toLowerCase().match(regexp);
-	qstr_array = qstr_array[qstr_array.length-1];
-	qstr_array = qstr_array.substr(1, qstr_array.length-2);
+	if( qstr_array != null )
+	{
+		qstr_array = qstr_array[qstr_array.length-1];
+		qstr_array = qstr_array.substr(1, qstr_array.length-2);
+	}
 	insert_array = [localStorage['custom_name'], custom_search, qstr_array, GetHost(custom_search)];
 	searchselect_array.push(insert_array);
 }
