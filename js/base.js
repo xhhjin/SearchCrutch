@@ -33,6 +33,8 @@ var searchhost_array =
 ];
 function insertCustomArray()
 {
+	if (null == localStorage.getItem('custom_search'))
+		return;
 	if( search_array.length > 6 )	// 判断是否需要删除尾部追加的自定义搜索
 	{
 		search_array.pop();
