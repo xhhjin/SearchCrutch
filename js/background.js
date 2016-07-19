@@ -17,8 +17,8 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 		chrome.pageAction.show(tabId);
 		return;
 	}
-	host = GetHost( tab.url );
 	insertCustomArray();
+	host = GetHost( tab.url );
 	i_host = inHostArray(host);
 	if( -1 < i_host ) 
 	{

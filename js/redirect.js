@@ -21,8 +21,8 @@ function redirect( index )
 			q = localStorage["word"] ;
 		else
 		{
-			host = GetHost(tab.url);
 			insertCustomArray();
+			host = GetHost(tab.url);
 			i_host = inHostArray(host) ;
 			args = GetUrlParms(tab.url);
 			if( -1 < i_host )

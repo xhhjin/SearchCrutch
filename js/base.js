@@ -52,7 +52,7 @@ function insertCustomArray()
 		qstr_array = qstr_array[qstr_array.length-1];
 		qstr_array = qstr_array.substr(1, qstr_array.length-2);
 	}
-	insert_array = [localStorage['custom_name'], custom_search, qstr_array, GetHost(custom_search)];
+	insert_array = [localStorage['custom_name'], custom_search, qstr_array, 'http://'+GetHost(custom_search)];
 	searchselect_array.push(insert_array);
 }
 function inHostArray(host)
