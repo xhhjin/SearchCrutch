@@ -90,6 +90,8 @@ function GetHost(url)
 	pos = url.indexOf("//");
 	if( -1 < pos )
 		host = url.substr(pos+2);
+	else
+		return 'www.google.com.hk';
 	if( host.length > 0 )
 	{
 		pos = host.indexOf("/");
