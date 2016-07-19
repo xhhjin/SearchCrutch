@@ -1,4 +1,4 @@
-window.addEventListener("load", restore_options);
+﻿window.addEventListener("load", restore_options);
 
 function $(objStr){return document.getElementById(objStr);}
 
