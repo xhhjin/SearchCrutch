@@ -2,8 +2,10 @@
 
 function onLoad()
 {
+	document.getElementById('a_7').innerHTML=localStorage[ 'custom_name' ];
 	chrome.tabs.getSelected(null,function(tab){ 
 		host = GetHost(tab.url);
+		insertCustomArray();
 		i_host = inHostArray(host) ;
 		if( -1< i_host)
 			SetNowLink( searchhost_array[i_host][1] );

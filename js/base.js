@@ -31,6 +31,21 @@ var searchhost_array =
 	['www.sogou.com',5],
 	['www.so.com',6]
 ];
+function insertCustomArray()
+{
+	var insert_array = 'custom';
+	var custom_search = localStorage['custom_search'];
+	search_array.push(insert_array);
+	insert_array = [GetHost(custom_search), 7];
+	searchhost_array.push(insert_array);
+	var qstr_array = 'q';
+	var regexp = /[#?&]\w{1,5}=/g;
+	qstr_array = custom_search.toLowerCase().match(regexp);
+	qstr_array = qstr_array[qstr_array.length-1];
+	qstr_array = qstr_array.substr(1, qstr_array.length-2);
+	insert_array = [localStorage['custom_name'], custom_search, qstr_array, GetHost(custom_search)];
+	searchselect_array.push(insert_array);
+}
 function inHostArray(host)
 {
 	for(i=0;i<searchhost_array.length;i++)

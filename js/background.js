@@ -18,7 +18,8 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 		return;
 	}
 	host = GetHost( tab.url );
-	i_host = inHostArray(host) ;
+	insertCustomArray();
+	i_host = inHostArray(host);
 	if( -1 < i_host ) 
 	{
 		//for direct visit from google refer url
