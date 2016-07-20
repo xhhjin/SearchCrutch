@@ -25,8 +25,10 @@ var searchhost_array =
 	['www.google.com',0],
 	['www.google.com.hk',0],
 	['www.aolsearch.com',1],
+	['search.aol.com',1],
 	['www.baidu.com',2],
 	['cn.bing.com',3],
+	['www.bing.com',3],
 	['search.yahoo.com',4],
 	['www.sogou.com',5],
 	['www.so.com',6]
