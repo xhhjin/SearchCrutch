@@ -10,7 +10,6 @@ document.getElementById('cb_7').addEventListener('click',save_options);		//自�
 document.getElementById('custom_name').addEventListener('input',save_options);		//自定义名称
 document.getElementById('custom_search').addEventListener('input',save_options);	//自定义搜索
 
-document.getElementById('a_reclose').addEventListener('click',re_close);
 document.getElementById('cb1_explain').addEventListener('click',explain);
 
 // Saves options to localStorage.
@@ -38,19 +37,5 @@ function explain()
 	{
 		$('lb_imgg').className = '';
 		$('div_exp').style.display = 'none';
-	}
-}
-
-function re_close()
-{
-	if( $('div_recommend').style.display == 'none' )
-	{
-		$('div_recommend').style.display = '';
-		$('a_reclose').innerHTML = '隐藏推荐';
-	}
-	else
-	{
-		$('div_recommend').style.display = 'none';
-		$('a_reclose').innerHTML = '显示推荐';
 	}
 }
