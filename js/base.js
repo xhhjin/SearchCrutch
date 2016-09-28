@@ -49,7 +49,7 @@ function insertCustomArray()
 	insert_array = [GetHost(custom_search), 7];
 	searchhost_array.push(insert_array);
 	var qstr_array = 'q';
-	var regexp = /[#?&]\w{1,5}=/g;
+	var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;	// q=    search=    keyword=
 	qstr_array = custom_search.toLowerCase().match(regexp);
 	if( qstr_array != null )
 	{
