@@ -3,7 +3,8 @@
 function onLoad()
 {
 	document.getElementById('a_7').innerHTML=localStorage[ 'custom_name' ];
-	chrome.tabs.getSelected(null,function(tab){ 
+	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
+		tab = tabs[0];
 		insertCustomArray();
 		host = GetHost(tab.url);
 		i_host = inHostArray(host) ;

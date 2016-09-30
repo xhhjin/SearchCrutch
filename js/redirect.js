@@ -15,7 +15,8 @@ function CheckRedirect( )
 
 function redirect( index )
 {
-	chrome.tabs.getSelected(null,function(tab){ 
+	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
+		tab = tabs[0];
 		q ='';
 		if( localStorage["word"] )
 			q = localStorage["word"] ;
