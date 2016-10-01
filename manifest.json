@@ -1,6 +1,6 @@
 ﻿{
   "name": "搜索拐杖",
-  "version": "3.10",
+  "version": "3.11",
   "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输！",
   "homepage_url": "http://xuhehuan.com/2272.html",
   "background" : { "scripts": ["js/background.js", "js/base.js"] },
