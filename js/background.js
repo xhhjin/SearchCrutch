@@ -32,7 +32,6 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 			return;
 		}
 		chrome.pageAction.show(tabId);
-		_gaq.push(['_trackEvent', 'search', searchselect_array[ searchhost_array[i_host][1] ][0] ]);
 		return;
 	}
 };
@@ -54,7 +53,6 @@ function ActionClick(tab)
 				newurl = 'https'+ oldurl.substr(4);
 		}
 		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});
-		_gaq.push(['_trackEvent', 'redirect', 'Http/Https' ]);
 	}
 	else
 	{
@@ -68,28 +66,15 @@ function ActionClick(tab)
 			if( ori_url )
 				chrome.tabs.update( tab.id, {url: decodeURIComponent(ori_url) }, function(tab){});
 		}
-		_gaq.push(['_trackEvent', 'redirect', 'Go refURL_'+tab.url.substr(14,4) ]);
 	}
 }
 
 chrome.pageAction.onClicked.addListener(ActionClick);
 	
 function onRequest(request, sender, sendResponse) {
-	if( request.event == "gok" )
-	{
-		if( request.label == "gfinish" )
-		{
-			_gaq.push(['_trackEvent', 'search', 'Google_OK' ]);
-		}
-	}
-	if( request.tosearch )
-	{
-		_gaq.push(['_trackEvent', 'redirect', request.tosearch ]);
-	}
 	if( request.search )
 	{
 		localStorage["word"] = request.search;
-		_gaq.push(['_trackEvent', 'SearchLength', request.search.length+" " ]);
 	}
 	sendResponse({});
 };
@@ -102,13 +87,3 @@ if (!firstRun) {
 	chrome.tabs.create({url:"options.html"},function(response) {});
 	localStorage['firstRun'] = 'true';
 }
- 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-22369668-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = 'https://ssl.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();

@@ -5,6 +5,7 @@ function $(objStr){return document.getElementById(objStr);}
 // Restores select box state to saved value from localStorage.
 function restore_options() 
 {
+	window.removeEventListener("load", restore_options, false);
 	for( i=0;i<searchselect_array.length+1;i++ )
 	{
 		cb_id = 'cb_' + i;

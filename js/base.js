@@ -12,13 +12,13 @@ search_array =['google','baidu','bing','yahoo','sogou','haosou'];
 
 var searchselect_array = 
 [
-	['Google','http://www.google.com.hk/search?hl=zh-CN&newwindow=1&q=','q','http://www.google.com.hk'],
+	['Google','https://www.google.com.hk/search?hl=zh-CN&newwindow=1&q=','q','https://www.google.com.hk'],
 	['AOL Search','http://www.aolsearch.com/search?q=','q','http://www.aolsearch.com'],
-	['百度','http://www.baidu.com/s?wd=','wd','http://www.baidu.com'],
-	['必应','http://cn.bing.com/search?q=','q','http://cn.bing.com'],
-	['雅虎','http://search.yahoo.com/search?p=','p','http://search.yahoo.com'],
-	['搜狗','http://www.sogou.com/web?query=','query','http://www.sogou.com'],
-	['360搜索','http://www.so.com/s?q=','q','http://www.so.com'],
+	['百度','https://www.baidu.com/s?wd=','wd','https://www.baidu.com'],
+	['必应','https://cn.bing.com/search?q=','q','https://cn.bing.com'],
+	['雅虎','https://search.yahoo.com/search?p=','p','https://search.yahoo.com'],
+	['搜狗','https://www.sogou.com/web?query=','query','https://www.sogou.com'],
+	['360搜索','https://www.so.com/s?q=','q','https://www.so.com'],
 ];
 var searchhost_array =
 [
