@@ -24,6 +24,7 @@ var searchhost_array =
 [
 	['www.google.com',0],
 	['www.google.com.hk',0],
+	['ipv4.google.com',0],
 	['www.aolsearch.com',1],
 	['search.aol.com',1],
 	['www.baidu.com',2],
@@ -74,6 +75,8 @@ function GetUrlParms(hrefstr)
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
 		pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
+	if( 0 > pos)
+		pos = hrefstr.indexOf("&");//针对Google出错时的情况，寻找关键字： https://www.google.com.hk/search&q=dd
 	if( 0 < pos)
 	{
 		query = hrefstr.substring(pos+1);
