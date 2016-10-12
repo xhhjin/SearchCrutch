@@ -31,6 +31,13 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 			chrome.pageAction.show(tabId);
 			return;
 		}
+		if( 'checked' == localStorage['cb_switch'] )
+		{
+			chrome.pageAction.setPopup({popup: '', tabId: tab.id});
+			chrome.pageAction.setTitle({title:'点击切换搜索引擎',tabId: tabId});
+			chrome.pageAction.show(tabId);
+			return;
+		}
 		chrome.pageAction.show(tabId);
 		return;
 	}
@@ -52,6 +59,41 @@ function ActionClick(tab)
 			else
 				newurl = 'https'+ oldurl.substr(4);
 		}
+		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});
+	}
+	else if( 'checked' == localStorage['cb_switch'] )
+	{
+		chrome.pageAction.setIcon({path:'img/icon-38-b.png',tabId: tab.id});
+		index = 0;
+		insertCustomArray();
+		host = GetHost(tab.url);
+		i_host = inHostArray(host) ;
+		index = searchhost_array[i_host][1];
+		for( i=0; i<search_array.length; i++ )
+		{
+			index++;
+			if( index >= search_array.length )
+				index = 0;
+			cb_id = 'cb_' + index;
+			if( 'checked' == localStorage[ cb_id ] )
+				break;
+		}
+		q ='';
+		if( localStorage["word"] )
+			q = localStorage["word"] ;
+		else
+		{
+			args = GetUrlParms(tab.url);
+			if( -1 < i_host )
+			{
+				q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
+			}
+		}
+		if(q)
+			newurl = searchselect_array[index][1] + q;
+		else
+			newurl = searchselect_array[index][3];
+
 		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});
 	}
 	else

@@ -1,5 +1,5 @@
 ﻿function $(objStr){return document.getElementById(objStr);}
-search_array =['google','baidu','bing','yahoo','sogou','haosou'];
+search_array =['google', 'aol', 'baidu','bing','yahoo','sogou','haosou'];
 //var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.so.com'];
 
 // var qstr_array={};
@@ -37,7 +37,7 @@ function insertCustomArray()
 {
 	if (null == localStorage.getItem('custom_search'))
 		return;
-	if( search_array.length > 6 )	// 判断是否需要删除尾部追加的自定义搜索
+	if( search_array.length > 7 )	// 判断是否需要删除尾部追加的自定义搜索
 	{
 		search_array.pop();
 		searchhost_array.pop();

@@ -3,7 +3,7 @@
 function onLoad()
 {
 	window.removeEventListener("load", onLoad, false);
-	document.getElementById('a_7').textContent=localStorage[ 'custom_name' ];
+	document.getElementById('a_7').innerHTML=localStorage[ 'custom_name' ];
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
 		tab = tabs[0];
 		insertCustomArray();
