@@ -25,8 +25,8 @@ function save_options() {
 	localStorage[ 'custom_search' ] = custom_search.value;
 	
 	var status = document.getElementById("status");
-	status.innerHTML = "选项已保存";
-	setTimeout(function() {status.innerHTML = "";}, 1000);
+	status.textContent = "选项已保存";
+	setTimeout(function() {status.textContent = "";}, 1000);
 }
 
 function explain()
