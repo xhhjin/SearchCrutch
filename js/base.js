@@ -64,7 +64,8 @@ function inHostArray(host)
 {
 	for(i=0;i<searchhost_array.length;i++)
 	{
-		if( host == searchhost_array[i][0] )
+		//if( host == searchhost_array[i][0] )
+		if( host.match(searchhost_array[i][0])!=null )
 			return i;
 	}
 	return -1;
