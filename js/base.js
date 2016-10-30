@@ -25,6 +25,7 @@ var searchhost_array =
 	['www.google.com',0],
 	['www.google.com.hk',0],
 	['ipv4.google.com',0],
+	[/www.google(\.\w+){1,2}/,0],
 	['www.aolsearch.com',1],
 	['search.aol.com',1],
 	['www.baidu.com',2],
@@ -64,7 +65,6 @@ function inHostArray(host)
 {
 	for(i=0;i<searchhost_array.length;i++)
 	{
-		//if( host == searchhost_array[i][0] )
 		if( host.match(searchhost_array[i][0])!=null )
 			return i;
 	}
@@ -73,6 +73,8 @@ function inHostArray(host)
 function GetUrlParms(hrefstr)    
 {
 	var args=new Object();
+	//针对Google的情况，防止关键字分错，https://www.google.co.uk/?gws_rd=ssl#q=dd    https://www.google.co.jp/?gws_rd=ssl,cr#q=dd
+	hrefstr = hrefstr.replace(/\?gws_rd=([^#\?&]+)/,"");
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
 		pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
