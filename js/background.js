@@ -1,8 +1,8 @@
 function checkForValidUrl(tabId, changeInfo, tab) {
 	if( !changeInfo.status )
 		return;
-	if( 'loading' != changeInfo.status )
-		return;
+	//if( 'loading' != changeInfo.status )
+	//	return;
 	localStorage["word"] = '';
 	if( 'chrome://newtab/' == tab.url )
 	{
