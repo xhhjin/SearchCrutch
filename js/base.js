@@ -75,6 +75,12 @@ function GetUrlParms(hrefstr)
 	var args=new Object();
 	//针对Google的情况，防止关键字分错，https://www.google.co.uk/?gws_rd=ssl#q=dd    https://www.google.co.jp/?gws_rd=ssl,cr#q=dd
 	hrefstr = hrefstr.replace(/\?gws_rd=([^#\?&]+)/,"");
+	//针对Google的情况 https://ipv4.google.com/sorry/index?continue=https://www.google.com.hk/search%3Fq%3Ddd    //https://ipv4.google.com/sorry/IndexRedirect?continue=https://www.google.com/search%3Fq%3Ddd
+	if( hrefstr.match("//ipv4.google.com/") != null )
+	{
+		hrefstr = hrefstr.replace(/^https?:\/\/ipv4\.google\.com\/sorry\/([a-zA-Z0-9]+)\?continue=/,"");
+		hrefstr = unescape(hrefstr);
+	}
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
 		pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
@@ -87,9 +93,10 @@ function GetUrlParms(hrefstr)
 		for(var i=0;i<pairs.length;i++)   
 		{   
 			var pos=pairs[i].indexOf('=');//查找name=value   
-				if(pos==-1)   continue;//如果没有找到就跳过   
-				var argname=pairs[i].substring(0,pos);//提取name   
-				var value=pairs[i].substring(pos+1);//提取value   
+			if( pos == -1 )   continue;//如果没有找到就跳过   
+			var argname=pairs[i].substring(0,pos);//提取name   
+			var value=pairs[i].substring(pos+1);//提取value   
+			if( args[argname] == undefined )//只保留第一次找到的
 				args[argname]=value;//存为属性   
 		}
 	}
