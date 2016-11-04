@@ -119,7 +119,9 @@ function ActionShortcut(tab, flag)
 	index = 0;
 	insertCustomArray();
 	host = GetHost(tab.url);
-	i_host = inHostArray(host) ;
+	i_host = inHostArray(host);
+	if( 0 > i_host ) 
+		return;
 	index = searchhost_array[i_host][1];
 	for( i=0; i<search_array.length; i++ )
 	{
