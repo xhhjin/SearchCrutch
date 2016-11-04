@@ -11,15 +11,9 @@ function restore_options()
 		cb_id = 'cb_' + i;
 		if( 'no' == localStorage[cb_id] )
 			$( cb_id ).checked = '';
-		if( 'checked' == localStorage[cb_id] )
+		else
 			$( cb_id ).checked = 'checked';
 	}
-	if (null == localStorage.getItem('cb_switch'))
-		localStorage[ 'cb_switch' ] = "no";
-	if (null == localStorage.getItem('custom_name'))
-		localStorage[ 'custom_name' ] = "请输入名称";
-	if (null == localStorage.getItem("custom_search"))
-		localStorage[ 'custom_search' ] = "请输入路径";
 	if( 'no' == localStorage['cb_switch'] )
 		$( 'cb_switch' ).checked = '';
 	else

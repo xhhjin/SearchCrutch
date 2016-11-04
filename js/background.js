@@ -112,6 +112,72 @@ function ActionClick(tab)
 }
 
 chrome.pageAction.onClicked.addListener(ActionClick);
+
+function ActionShortcut(tab, flag)
+{
+	chrome.pageAction.setIcon({path:'img/icon-38-b.png',tabId: tab.id});
+	index = 0;
+	insertCustomArray();
+	host = GetHost(tab.url);
+	i_host = inHostArray(host) ;
+	index = searchhost_array[i_host][1];
+	for( i=0; i<search_array.length; i++ )
+	{
+		switch (flag)
+		{
+		case "switch-pre":
+			index--;
+			if( index < 0 )
+				index = search_array.length-1;
+			break;
+		case "switch-next":
+			index++;
+			if( index >= search_array.length )
+				index = 0;
+			break;
+		}
+		
+		cb_id = 'cb_' + index;
+		if( 'checked' == localStorage[ cb_id ] )
+			break;
+	}
+	q ='';
+	if( localStorage["word"] )
+		q = localStorage["word"] ;
+	else
+	{
+		args = GetUrlParms(tab.url);
+		if( -1 < i_host )
+		{
+			q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
+		}
+	}
+	if(q)
+		newurl = searchselect_array[index][1] + q;
+	else
+		newurl = searchselect_array[index][3];
+
+	chrome.tabs.update( tab.id, {url:newurl}, function(tab){});
+}
+
+// Listen for these commands of shortcuts
+chrome.commands.onCommand.addListener(function(command) {
+	switch ( command ) 
+	{
+	case "switch-pre":
+		chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+			ActionShortcut(tabs[0], command);
+		});
+		break;
+	case "switch-next":
+		chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+			ActionShortcut(tabs[0], command);
+		});
+		break;
+	default:
+		break;
+	}
+});
 	
 function onRequest(request, sender, sendResponse) {
 	if( request.search )
@@ -127,5 +193,19 @@ chrome.runtime.onMessage.addListener(onRequest);
 var firstRun = (localStorage['firstRun'] == 'true');
 if (!firstRun) {
 	chrome.tabs.create({url:"options.html"},function(response) {});
+	if (null == localStorage.getItem('cb_switch'))
+		localStorage[ 'cb_switch' ] = "no";
+	if (null == localStorage.getItem('custom_name'))
+		localStorage[ 'custom_name' ] = "请输入名称";
+	if (null == localStorage.getItem("custom_search"))
+		localStorage[ 'custom_search' ] = "请输入路径";
+	for( i=0; i<8; i++ )
+	{
+		cb_id = 'cb_' + i;
+		localStorage[cb_id] = 'no';
+	}
+	localStorage['cb_0'] = 'checked';
+	localStorage['cb_2'] = 'checked';
+	localStorage['cb_3'] = 'checked';
 	localStorage['firstRun'] = 'true';
 }
