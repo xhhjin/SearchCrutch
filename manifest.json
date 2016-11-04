@@ -68,13 +68,13 @@
   "commands": {
     "switch-pre": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Comma"
+        "default": "Ctrl+Shift+Y"
       },
       "description": "切换上一个搜索引擎"
     },
 	"switch-next": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Period"
+        "default": "Ctrl+Shift+U"
       },
       "description": "切换下一个搜索引擎"
     }
