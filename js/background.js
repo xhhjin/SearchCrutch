@@ -197,11 +197,20 @@ if (!firstRun) {
 	chrome.tabs.create({url:"options.html"},function(response) {});
 	if (null == localStorage.getItem('cb_switch'))
 		localStorage[ 'cb_switch' ] = "no";
-	if (null == localStorage.getItem('custom_name'))
-		localStorage[ 'custom_name' ] = "请输入名称";
-	if (null == localStorage.getItem("custom_search"))
-		localStorage[ 'custom_search' ] = "请输入路径";
-	for( i=0; i<8; i++ )
+	if (null == localStorage.getItem('custom_name_0'))
+		localStorage[ 'custom_name_0' ] = "请输入名称";
+	if (null == localStorage.getItem("custom_search_0"))
+		localStorage[ 'custom_search_0' ] = "请输入路径";
+	for( i=1; i<6; i++ )	// 6 = search_custom_num
+	{
+		custom_name_id   = 'custom_name_' + i;
+		custom_search_id   = 'custom_search_' + i;
+		if (null == localStorage.getItem(custom_name_id))
+			localStorage[custom_name_id]   = '';
+		if (null == localStorage.getItem(custom_search_id))
+			localStorage[custom_search_id] = '';
+	}
+	for( i=0; i<13; i++ )	// 13 = search_array.length+search_custom_num
 	{
 		cb_id = 'cb_' + i;
 		localStorage[cb_id] = 'no';

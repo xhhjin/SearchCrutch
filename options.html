@@ -3,15 +3,15 @@
 <style type="text/css">
 * {margin:0;padding:0;}
 body {font-family:tahoma,Arial; font-size:13px;background:#ccc;}
-#wrap {margin:0 auto;margin-top:20px;width:790px;height:565px;border:2px solid #999;-webkit-border-radius:12px;background:#fff;}
+#wrap {margin:0 auto;margin-top:20px;width:790px;height:665px;border:2px solid #999;-webkit-border-radius:12px;background:#fff;}
 #content {width:670px;margin-left:60px;}
 #heading {padding:16px 0 15px;border-bottom:1px dashed #999;}
 #heading img {float:left;margin:-8px 15px 0 0;}
 #heading h1 {font-size:25px;}
-#options {padding:10px 0 26px;border-bottom:1px dashed #999;line-height:24px;height:360px;}
+#options {padding:10px 0 26px;border-bottom:1px dashed #999;line-height:24px;height:480px;}
 #options p{margin-top:5px;line-height:30px;font-weight:bold;}
 #options input {float:left;margin:7px 6px 0 0;}
-#status {background-color:#ddf;text-align:center;margin-top:10px;}
+#status {background-color:#ddf;text-align:center;margin-top:5px;font-size:16px;}
 #div_exp{font-size:12px;line-height:20px;}
 .heighup{color:#080;}
 #div_recommend {margin:0 auto;margin-top:-20px;margin-bottom:10px;padding:20px 0;width:790px;border:1px solid #999;-webkit-border-radius:6px;background:#fff;}
@@ -30,7 +30,7 @@ a.adinfo:hover{color:#22f;}
 	<div id="heading"><img src='img/icon-48.png' /><h1>"搜索拐杖" 已安装 - 选项</h1></div>
 	<div id="options">
 	<div style="float:left;width:260px;">
-	Google不通时，快捷切换其他搜索！<br>
+	Google不通时，快捷切换其它搜索！<br>
 	<p>只显示我想切换的搜索：</p>
 	<input type="checkbox" id="cb_0" /><label for="cb_0">Google</label><br>
 	<input type="checkbox" id="cb_1" /><label id="lb_imgg"  for="cb_1">AOL Search</label>&nbsp;&nbsp;<a id="cb1_explain" href="#">(?)</a><br>
@@ -40,19 +40,46 @@ a.adinfo:hover{color:#22f;}
 	<input type="checkbox" id="cb_5" /><label for="cb_5">搜狗</label><br>
 	<input type="checkbox" id="cb_4" /><label for="cb_4">雅虎</label><br>
 	<input type="checkbox" id="cb_6" /><label for="cb_6">360搜索</label><br>
-	<input type="checkbox" id="cb_7" /><label for="cb_7">自定义</label><br>
+	<div style="margin-top:5px;">自定义搜索：
+	<a href="http://xuhehuan.com/2272.html#CustomSearch" target="_blank" title="如何配置？">(?)</a></div>
+	<div style="width:670px; height:165px; margin-top:5px;">
+	<table style="width:420; cellpadding:0; cellspacing:0;" >
+        <tr>
+			<td><input style="" type="checkbox" id="cb_7" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_0" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_0" /></td>
+        </tr>
+		<tr>
+			<td><input style="" type="checkbox" id="cb_8" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_1" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_1" /></td>
+        </tr>
+		<tr>
+			<td><input style="" type="checkbox" id="cb_9" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_2" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_2" /></td>
+        </tr>
+		<tr>
+			<td><input style="" type="checkbox" id="cb_10" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_3" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_3" /></td>
+        </tr>
+		<tr>
+			<td><input style="" type="checkbox" id="cb_11" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_4" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_4" /></td>
+        </tr>
+		<tr>
+			<td><input style="" type="checkbox" id="cb_12" /></td>
+			<td><input style="width:120px;"type="text" id="custom_name_5" /></td>
+			<td><input style="width:300px;"type="text" id="custom_search_5" /></td>
+        </tr>
+	</table>
+	</div>
 	<div style="margin-top:5px;">辅助小功能：</div>
 	<input type="checkbox" id="cb_switch" /><label for="cb_switch">单击图标切换</label><br>
 	<input type="checkbox" id="cb_dref" checked="checked" disabled="true"/><label for="cb_dref">支持Google引用页重试直接访问</label>&nbsp;&nbsp;
 	<a href="http://xuhehuan.com/2272.html#SearchDirect" target="_blank">(?)</a>
-	<div style="margin-top:5px;">自定义搜索：
-	<a href="http://xuhehuan.com/2272.html#CustomSearch" target="_blank" title="如何配置？">(?)</a></div>
-	<table style="width:420;cellpadding:0;cellspacing:0;" >
-        <tr>
-			<td><input style="width:120px;" type="text" id="custom_name" /></td>  
-			<td><input style="width:300px;"type="text" id="custom_search" /></td>  
-        </tr>
-	</table>
 	</div>
 	<div style="float:right;margin-top:4px;"><img src='SearchCrutch.png' /><br>
 	</div>

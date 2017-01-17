@@ -1,14 +1,6 @@
 ﻿function $(objStr){return document.getElementById(objStr);}
 search_array =['google', 'aol', 'baidu','bing','yahoo','sogou','haosou'];
-//var host_array=['www.google.com','www.baidu.com','cn.bing.com','www.yahoo.cn','www.sogou.com','www.so.com'];
-
-// var qstr_array={};
-// qstr_array['google'] = 'q';
-// qstr_array['baidu'] = 'wd';
-// qstr_array['bing'] = 'q';
-// qstr_array['yahoo'] = 'p';
-// qstr_array['sogou'] = 'query';
-// qstr_array['haosou'] = 'q';
+search_custom_num = 6;
 
 var searchselect_array = 
 [
@@ -37,29 +29,35 @@ var searchhost_array =
 ];
 function insertCustomArray()
 {
-	if (null == localStorage.getItem('custom_search'))
+	if (null == localStorage.getItem('custom_search_0'))
 		return;
-	if( search_array.length > 7 )	// 判断是否需要删除尾部追加的自定义搜索
+	for(i=search_array.length; i>7; i--)	// 判断是否需要删除尾部追加的自定义搜索
 	{
 		search_array.pop();
 		searchhost_array.pop();
 		searchselect_array.pop();
 	}
-	var insert_array = 'custom';
-	var custom_search = localStorage['custom_search'];	
-	search_array.push(insert_array);
-	insert_array = [GetHost(custom_search), 7];
-	searchhost_array.push(insert_array);
-	var qstr_array = 'q';
-	var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;	// q=    search=    keyword=
-	qstr_array = custom_search.toLowerCase().match(regexp);
-	if( qstr_array != null )
+	for(i=0; i<search_custom_num; i++)
 	{
-		qstr_array = qstr_array[qstr_array.length-1];
-		qstr_array = qstr_array.substr(1, qstr_array.length-2);
+		custom_name_id = 'custom_name_' + i;
+		custom_search_id = 'custom_search_' + i;
+		var insert_array = 'custom_' + i;
+		var custom_name  = localStorage[ custom_name_id ];
+		var custom_search = localStorage[custom_search_id];	
+		search_array.push(insert_array);
+		insert_array = [GetHost(custom_search), 7+i];
+		searchhost_array.push(insert_array);
+		var qstr_array = 'q';
+		var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;	// q=    search=    keyword=
+		qstr_array = custom_search.toLowerCase().match(regexp);
+		if( qstr_array != null )
+		{
+			qstr_array = qstr_array[qstr_array.length-1];
+			qstr_array = qstr_array.substr(1, qstr_array.length-2);
+		}
+		insert_array = [custom_name, custom_search, qstr_array, 'http://'+GetHost(custom_search)];
+		searchselect_array.push(insert_array);
 	}
-	insert_array = [localStorage['custom_name'], custom_search, qstr_array, 'http://'+GetHost(custom_search)];
-	searchselect_array.push(insert_array);
 }
 function inHostArray(host)
 {

@@ -6,25 +6,45 @@ document.getElementById('cb_4').addEventListener('click',save_options);		//雅�
 document.getElementById('cb_5').addEventListener('click',save_options);		//搜狗
 document.getElementById('cb_6').addEventListener('click',save_options);		//360
 document.getElementById('cb_7').addEventListener('click',save_options);		//自定义
+document.getElementById('cb_8').addEventListener('click',save_options);		//自定义
+document.getElementById('cb_9').addEventListener('click',save_options);		//自定义
+document.getElementById('cb_10').addEventListener('click',save_options);	//自定义
+document.getElementById('cb_11').addEventListener('click',save_options);	//自定义
+document.getElementById('cb_12').addEventListener('click',save_options);	//自定义
 
-document.getElementById('custom_name').addEventListener('input',save_options);		//自定义名称
-document.getElementById('custom_search').addEventListener('input',save_options);	//自定义搜索
+document.getElementById('custom_name_0').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_0').addEventListener('input',save_options);		//自定义搜索
+document.getElementById('custom_name_1').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_1').addEventListener('input',save_options);		//自定义搜索
+document.getElementById('custom_name_2').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_2').addEventListener('input',save_options);		//自定义搜索
+document.getElementById('custom_name_3').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_3').addEventListener('input',save_options);		//自定义搜索
+document.getElementById('custom_name_4').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_4').addEventListener('input',save_options);		//自定义搜索
+document.getElementById('custom_name_5').addEventListener('input',save_options);		//自定义名称
+document.getElementById('custom_search_5').addEventListener('input',save_options);		//自定义搜索
 
-document.getElementById('cb_switch').addEventListener('click',save_options);		//单击图标切换
+document.getElementById('cb_switch').addEventListener('click',save_options);	//单击图标切换
 document.getElementById('cb1_explain').addEventListener('click',explain);
 
 // Saves options to localStorage.
 function save_options() {
-	for( i=0; i<searchselect_array.length+1; i++ )
+	for( i=0; i<searchselect_array.length+search_custom_num; i++ )
 	{
 		cb_id = 'cb_' + i;
 		localStorage[ cb_id ] = $(cb_id).checked?'checked':'no';
 	}
-	localStorage[ 'cb_switch' ] = $("cb_switch").checked?'checked':'no';
-	localStorage[ 'custom_name' ] = custom_name.value;
-	localStorage[ 'custom_search' ] = custom_search.value;
+	for( i=0; i<search_custom_num; i++ )
+	{
+		custom_name_id = 'custom_name_' + i;
+		custom_search_id = 'custom_search_' + i;
+		localStorage[ custom_name_id ]   = $(custom_name_id).value;
+		localStorage[ custom_search_id ] = $(custom_search_id).value;
+	}
+	localStorage[ 'cb_switch' ] = $('cb_switch').checked?'checked':'no';
 	
-	var status = document.getElementById("status");
+	var status = document.getElementById('status');
 	status.textContent = "选项已保存";
 	setTimeout(function() {status.textContent = "";}, 1000);
 }

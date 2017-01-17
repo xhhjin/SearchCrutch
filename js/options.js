@@ -6,7 +6,7 @@ function $(objStr){return document.getElementById(objStr);}
 function restore_options() 
 {
 	window.removeEventListener("load", restore_options, false);
-	for( i=0;i<searchselect_array.length+1;i++ )
+	for( i=0; i<searchselect_array.length+search_custom_num; i++ )
 	{
 		cb_id = 'cb_' + i;
 		if( 'no' == localStorage[cb_id] )
@@ -14,10 +14,15 @@ function restore_options()
 		else
 			$( cb_id ).checked = 'checked';
 	}
+	for( i=0; i<search_custom_num; i++ )
+	{
+		custom_name_id   = 'custom_name_' + i;
+		custom_search_id = 'custom_search_' + i;
+		$( custom_name_id ).value   = localStorage[ custom_name_id ];
+		$( custom_search_id ).value = localStorage[ custom_search_id ];
+	}
 	if( 'no' == localStorage['cb_switch'] )
 		$( 'cb_switch' ).checked = '';
 	else
 		$( 'cb_switch' ).checked = 'checked';
-	document.getElementById('custom_name').value = localStorage[ 'custom_name' ];
-	document.getElementById('custom_search').value = localStorage[ 'custom_search' ];
 }

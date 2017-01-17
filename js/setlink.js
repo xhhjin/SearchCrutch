@@ -3,7 +3,11 @@
 function onLoad()
 {
 	window.removeEventListener("load", onLoad, false);
-	document.getElementById('a_7').textContent=localStorage[ 'custom_name' ];
+	for(i=0; i<search_custom_num; i++ ) {
+		id = search_array.length + i;
+		a_id = 'a_' + id ;
+		$( a_id ).textContent = localStorage[ 'custom_name_' + i ];
+	}
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
 		tab = tabs[0];
 		insertCustomArray();
@@ -18,7 +22,7 @@ function onLoad()
 
 function SetNowLink( index )
 {
-	for( i=0;i<searchselect_array.length;i++)
+	for(i=0; i<searchselect_array.length; i++)
 	{
 		a_id = 'a_' + i ;
 		if( $( a_id) )

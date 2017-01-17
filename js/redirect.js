@@ -5,7 +5,12 @@ document.getElementById('a_3').addEventListener('click',CheckRedirect);		//必�
 document.getElementById('a_4').addEventListener('click',CheckRedirect);		//雅虎
 document.getElementById('a_5').addEventListener('click',CheckRedirect);		//搜狗
 document.getElementById('a_6').addEventListener('click',CheckRedirect);		//360搜索
-document.getElementById('a_7').addEventListener('click',CheckRedirect);		//自定义搜索
+document.getElementById('a_7').addEventListener('click',CheckRedirect);		//自定义搜索1
+document.getElementById('a_8').addEventListener('click',CheckRedirect);		//自定义搜索2
+document.getElementById('a_9').addEventListener('click',CheckRedirect);		//自定义搜索3
+document.getElementById('a_10').addEventListener('click',CheckRedirect);	//自定义搜索4
+document.getElementById('a_11').addEventListener('click',CheckRedirect);	//自定义搜索5
+document.getElementById('a_12').addEventListener('click',CheckRedirect);	//自定义搜索6
 
 function CheckRedirect( )
 {
