@@ -55,6 +55,10 @@ function insertCustomArray()
 			qstr_array = qstr_array[qstr_array.length-1];
 			qstr_array = qstr_array.substr(1, qstr_array.length-2);
 		}
+		else
+		{
+			qstr_array = 'q';
+		}
 		insert_array = [custom_name, custom_search, qstr_array, 'http://'+GetHost(custom_search)];
 		searchselect_array.push(insert_array);
 	}
@@ -78,6 +82,11 @@ function GetUrlParms(hrefstr)
 	{
 		hrefstr = hrefstr.replace(/^https?:\/\/ipv4\.google\.com\/sorry\/([a-zA-Z0-9]+)\?continue=/,"");
 		hrefstr = unescape(hrefstr);
+	}
+	//针对Soku的情况 http://www.soku.com/search_video/q_dd 替换 q_ 为 q=
+	if( hrefstr.match("//www.soku.com/search_video/q_") != null )
+	{
+		hrefstr = hrefstr.replace(/^https?:\/\/www\.soku\.com\/search_video\/q_/,"http://www.soku.com/search_video/?q=");
 	}
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
