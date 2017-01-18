@@ -80,13 +80,20 @@ function GetUrlParms(hrefstr)
 	//针对Google的情况 https://ipv4.google.com/sorry/index?continue=https://www.google.com.hk/search%3Fq%3Ddd    //https://ipv4.google.com/sorry/IndexRedirect?continue=https://www.google.com/search%3Fq%3Ddd
 	if( hrefstr.match("//ipv4.google.com/") != null )
 	{
-		hrefstr = hrefstr.replace(/^https?:\/\/ipv4\.google\.com\/sorry\/([a-zA-Z0-9]+)\?continue=/,"");
+		hrefstr = hrefstr.replace(/^https?:\/\/ipv4\.google\.com\/sorry\/([a-zA-Z0-9]+)\?continue=/, "");
 		hrefstr = unescape(hrefstr);
 	}
-	//针对Soku的情况 http://www.soku.com/search_video/q_dd 替换 q_ 为 q=
-	if( hrefstr.match("//www.soku.com/search_video/q_") != null )
+	else if( hrefstr.match("//www.soku.com/search_video/q_") != null )  //针对Soku的情况 http://www.soku.com/search_video/q_dd 替换 q_ 为 ?q=
 	{
-		hrefstr = hrefstr.replace(/^https?:\/\/www\.soku\.com\/search_video\/q_/,"http://www.soku.com/search_video/?q=");
+		hrefstr = hrefstr.replace(/^https?:\/\/www\.soku\.com\/search_video\/q_/, "http://www.soku.com/search_video/?q=");
+	}
+	else if( hrefstr.match("//s.weibo.com/weibo/") != null )  //针对微博搜索的情况 http://s.weibo.com/weibo/dd 添加 ?q=
+	{
+		hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/weibo\//, "http://s.weibo.com/weibo/?q=");
+	}
+	else if( hrefstr.match("//s.weibo.com/user/") != null )   //针对微博搜索的情况 http://s.weibo.com/user/dd 添加 ?q=
+	{
+		hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/user\//, "http://s.weibo.com/user/?q=");
 	}
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
