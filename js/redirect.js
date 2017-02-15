@@ -23,18 +23,13 @@ function redirect( index )
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
 		tab = tabs[0];
 		q ='';
-		if( localStorage["word"] )
-			q = localStorage["word"] ;
-		else
+		insertCustomArray();
+		host = GetHost(tab.url);
+		i_host = inHostArray(host) ;
+		args = GetUrlParms(tab.url);
+		if( -1 < i_host )
 		{
-			insertCustomArray();
-			host = GetHost(tab.url);
-			i_host = inHostArray(host) ;
-			args = GetUrlParms(tab.url);
-			if( -1 < i_host )
-			{
-				q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
-			}
+			q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
 		}
 		if(q)
 			newurl = searchselect_array[index][1] + q;
@@ -43,6 +38,5 @@ function redirect( index )
 
 		chrome.tabs.update( tab.id, {url:newurl}, function(tab){});//*/
 	});
-	chrome.runtime.sendMessage({"tosearch": searchselect_array[index][0] }, function(response) {});
 	SetNowLink( index );
 }

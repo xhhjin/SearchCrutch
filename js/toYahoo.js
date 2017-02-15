@@ -1,1 +1,0 @@
-﻿input_wd = document.getElementsByName('p');

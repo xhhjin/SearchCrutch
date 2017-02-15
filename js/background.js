@@ -3,7 +3,6 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 		return;
 	//if( 'loading' != changeInfo.status )
 	//	return;
-	localStorage["word"] = '';
 	if( 'chrome://newtab/' == tab.url )
 	{
 		chrome.pageAction.show(tabId);
@@ -79,15 +78,10 @@ function ActionClick(tab)
 				break;
 		}
 		q ='';
-		if( localStorage["word"] )
-			q = localStorage["word"] ;
-		else
+		args = GetUrlParms(tab.url);
+		if( -1 < i_host )
 		{
-			args = GetUrlParms(tab.url);
-			if( -1 < i_host )
-			{
-				q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
-			}
+			q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
 		}
 		if(q)
 			newurl = searchselect_array[index][1] + q;
@@ -144,15 +138,10 @@ function ActionShortcut(tab, flag)
 			break;
 	}
 	q ='';
-	if( localStorage["word"] )
-		q = localStorage["word"] ;
-	else
+	args = GetUrlParms(tab.url);
+	if( -1 < i_host )
 	{
-		args = GetUrlParms(tab.url);
-		if( -1 < i_host )
-		{
-			q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
-		}
+		q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
 	}
 	if(q)
 		newurl = searchselect_array[index][1] + q;
@@ -180,17 +169,6 @@ chrome.commands.onCommand.addListener(function(command) {
 		break;
 	}
 });
-	
-function onRequest(request, sender, sendResponse) {
-	if( request.search )
-	{
-		localStorage["word"] = request.search;
-	}
-	sendResponse({});
-};
-	
-// Listen for the content script to send a message to the background page.
-chrome.runtime.onMessage.addListener(onRequest);
  
 var firstRun = (localStorage['firstRun'] == 'true');
 if (!firstRun) {

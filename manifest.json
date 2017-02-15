@@ -1,6 +1,6 @@
 ﻿{
   "name": "搜索拐杖",
-  "version": "3.20",
+  "version": "3.21",
   "manifest_version": 2,
   "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输！",
   "homepage_url": "http://xuhehuan.com/2272.html",
@@ -20,44 +20,6 @@
   "options_ui": {
     "page": "options.html"
   },
-  "content_scripts" : [
-	{
-      "matches" : [
-        "http://www.google.com.hk/*",
-        "http://www.google.com/*"
-      ],
-      "js" : ["js/toGoogleFinish.js","js/sendword.js"],
-      "run_at" : "document_end"
-    },
-	{
-      "matches" : [
-        "http://www.baidu.com/*"
-      ],
-      "js" : ["js/toBaidu.js","js/sendword.js"],
-      "run_at" : "document_end"
-    },
-	{
-      "matches" : [
-        "http://www.sogou.com/*"
-      ],
-      "js" : ["js/toSogou.js","js/sendword.js"],
-      "run_at" : "document_end"
-    },
-	{
-      "matches" : [
-        "http://search.yahoo.com/*"
-      ],
-      "js" : ["js/toYahoo.js","js/sendword.js"],
-      "run_at" : "document_end"
-    },
-    {
-      "matches" : [
-        "http://www.so.com/*"
-      ],
-      "js" : ["js/tohaosou.js","js/sendword.js"],
-      "run_at" : "document_end"
-    }
-  ],
   "icons" : {
     "16" : "img/icon-16.png",
     "32" : "img/icon-32.png",
