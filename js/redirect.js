@@ -34,7 +34,6 @@ function redirect( index )
 			if( -1 < i_host )
 			{
 				q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
-				$('in_q').value = q;
 			}
 		}
 		if(q)

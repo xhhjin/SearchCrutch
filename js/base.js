@@ -98,6 +98,11 @@ function GetUrlParms(hrefstr)
 	{
 		hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/user\//, "http://s.weibo.com/user/?q=");
 	}
+	else if( hrefstr.match("//www.acfun.cn/search/") != null )   //针对AcFun搜索的情况 http://www.acfun.cn/search/?#page=1;query=dd;type=video 替换 query 之前的内容为 ?query
+	{
+		hrefstr = hrefstr.replace(/^https?:\/\/www\.acfun\.cn\/search\/(.+)query=/,  "http://www.acfun.cn/search/?query=");
+		hrefstr = hrefstr.replace(";",  "&");
+	}
 	pos = hrefstr.indexOf("?");
 	if( 0 > pos)
 		pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
