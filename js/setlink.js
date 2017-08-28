@@ -1,6 +1,8 @@
 /*global search_custom_num search_array insertCustomArray GetHost inHostArray searchhost_array searchselect_array*/
 window.addEventListener("load", onLoad);
 
+function $(objStr){return document.getElementById(objStr);}
+
 function onLoad() {
     window.removeEventListener("load", onLoad, false);
     for(var i=0; i<search_custom_num; i++ ) {
