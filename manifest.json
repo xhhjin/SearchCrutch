@@ -1,6 +1,6 @@
 {
   "name": "搜索拐杖",
-  "version": "3.21",
+  "version": "3.22",
   "manifest_version": 2,
   "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输！",
   "homepage_url": "http://xuhehuan.com/2272.html",
@@ -30,7 +30,7 @@
   },
   "applications": {
     "gecko": {
-      "id": "searchcrutch@xuhehuan.com",
+      "id": "{b8bd546f-44b3-4aa0-a549-3cbc7a2de9cf}",
       "strict_min_version": "48.0"
     }
   },

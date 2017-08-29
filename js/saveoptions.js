@@ -90,7 +90,7 @@ function upload_options() {
     
     chrome.storage.sync.clear(function(){
         chrome.storage.sync.set(data, function(){
-        if (!chrome.runtime.error) {
+            if (!chrome.runtime.error) {
                 alert("数据备份成功！");
             }
         });
