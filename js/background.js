@@ -1,4 +1,4 @@
-/*global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array */
+/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty */
 function checkForValidUrl(tabId, changeInfo, tab) {
     if( !changeInfo.status )
         return;
@@ -177,4 +177,33 @@ if (!firstRun) {
     localStorage["cb_2"] = "checked";
     localStorage["cb_3"] = "checked";
     localStorage["firstRun"] = "true";
+    
+    // Sync the backup data
+    chrome.storage.sync.get("backup_data", function (item) { 
+        if(!isEmpty(item)) {
+            var i;
+            for( i=0; i<13; i++ ) {
+                var cb_id = "cb_" + i;
+                chrome.storage.sync.get(cb_id, function (item) { 
+                    for (var key in item) break;    //取第一个
+                    localStorage[key] = item[key];
+                });
+            }
+            for( i=0; i<6; i++ ) {
+                var custom_name_id = "custom_name_" + i;
+                var custom_search_id = "custom_search_" + i;
+                chrome.storage.sync.get(custom_name_id, function (item) { 
+                    for (var key in item) break;
+                    localStorage[key] = item[key];
+                });
+                chrome.storage.sync.get(custom_search_id, function (item) { 
+                    for (var key in item) break;
+                    localStorage[key] = item[key];
+                });
+            }
+            chrome.storage.sync.get("cb_switch", function (item) { 
+                localStorage["cb_switch"] = item.cb_switch;
+            });
+        }
+    });
 }

@@ -441,7 +441,7 @@
 
 
 
-.jiathis_style_32x32  .jtico{text-align:left;overflow:hidden;display:block!important;height:32px!important;line-height:32px!important;padding-left:36px!important;background:url(/img/jiathis_ico_32x32.png) no-repeat left;cursor:pointer}
+.jiathis_style_32x32  .jtico{text-align:left;display:block!important;height:32px!important;line-height:32px!important;padding-left:36px!important;background:url(/img/jiathis_ico_32x32.png) no-repeat left;cursor:pointer}
 .jiathis_style_32x32  .jtico:hover{opacity:0.8;}
 .jiathis_style_32x32  .jiathis_txt{float:left;font-size:22px;text-decoration:none;line-height:32px!important;}
 .jiathis_style_32x32  .jiathis_separator{display:block;float:left;margin:0 5px;line-height:32px!important;}

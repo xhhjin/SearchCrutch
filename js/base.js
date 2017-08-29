@@ -1,4 +1,5 @@
-/* exported insertCustomArray inHostArray GetUrlParms getSearch */
+/* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch */
+function $(objStr){return document.getElementById(objStr);}
 var search_array =["google", "aol", "baidu","bing","yahoo","sogou","haosou"];
 var search_custom_num = 6;
 
@@ -27,6 +28,13 @@ var searchhost_array =
     ["www.sogou.com",5],
     ["www.so.com",6]
 ];
+
+function isEmpty(obj) {
+    for (var name in obj) {
+        return false;
+    }
+    return true;
+}
 function insertCustomArray() {
     if (null == localStorage.getItem("custom_search_0"))
         return;

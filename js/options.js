@@ -1,7 +1,5 @@
-/*global searchselect_array search_custom_num*/
+/* global searchselect_array search_custom_num */
 window.addEventListener("load", restore_options);
-
-function $(objStr){return document.getElementById(objStr);}
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {

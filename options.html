@@ -3,15 +3,14 @@
 <style type="text/css">
 * {margin:0;padding:0;}
 body {font-family:tahoma,Arial; font-size:13px;background:#ccc;}
-#wrap {margin:0 auto;margin-top:20px;width:790px;height:665px;border:2px solid #999;-webkit-border-radius:12px;background:#fff;}
+#wrap {margin:0 auto;margin-top:0px;width:790px;height:720px;border:2px solid #999;-webkit-border-radius:12px;background:#fff;}
 #content {width:670px;margin-left:60px;}
 #heading {padding:16px 0 15px;border-bottom:1px dashed #999;}
 #heading img {float:left;margin:-8px 15px 0 0;}
 #heading h1 {font-size:25px;}
-#options {padding:10px 0 26px;border-bottom:1px dashed #999;line-height:24px;height:480px;}
+#options {padding:10px 0 26px;border-bottom:1px dashed #999;line-height:24px;height:555px;}
 #options p{margin-top:5px;line-height:30px;font-weight:bold;}
 #options input {float:left;margin:7px 6px 0 0;}
-#status {background-color:#ddf;text-align:center;margin-top:5px;font-size:16px;}
 #div_exp{font-size:12px;line-height:20px;}
 .heighup{color:#080;}
 #div_recommend {margin:0 auto;margin-top:-20px;margin-bottom:10px;padding:20px 0;width:790px;border:1px solid #999;-webkit-border-radius:6px;background:#fff;}
@@ -27,78 +26,80 @@ a.adinfo:hover{color:#22f;}
 <body>
 <div id="wrap">
 <div id="content">
-	<div id="heading"><img src='img/icon-48.png' /><h1>"搜索拐杖" 已安装 - 选项</h1></div>
-	<div id="options">
-	<div style="float:left;width:260px;">
-	Google不通时，快捷切换其它搜索！<br>
-	<p>只显示我想切换的搜索：</p>
-	<input type="checkbox" id="cb_0" /><label for="cb_0">Google</label><br>
-	<input type="checkbox" id="cb_1" /><label id="lb_imgg"  for="cb_1">AOL Search</label>&nbsp;&nbsp;<a id="cb1_explain" href="#">(?)</a><br>
-	<div id="div_exp" style="display:none;" class="heighup">基于Google搜索结果提供服务的网站：<br><a href="http://www.aolsearch.com" target="_blank">http://www.aolsearch.com</a><br> 当Google无法访问时，可以用来代替Google。</div>
-	<input type="checkbox" id="cb_2" /><label for="cb_2">百度</label><br>
-	<input type="checkbox" id="cb_3" /><label for="cb_3">必应</label><br>
-	<input type="checkbox" id="cb_5" /><label for="cb_5">搜狗</label><br>
-	<input type="checkbox" id="cb_4" /><label for="cb_4">雅虎</label><br>
-	<input type="checkbox" id="cb_6" /><label for="cb_6">360搜索</label><br>
-	<div style="margin-top:5px;">自定义搜索：
-	<a href="http://xuhehuan.com/2272.html#CustomSearch" target="_blank" title="如何配置？">(?)</a></div>
-	<div style="width:670px; height:165px; margin-top:5px;">
-	<table style="width:420; cellpadding:0; cellspacing:0;" >
-        <tr>
-			<td><input style="" type="checkbox" id="cb_7" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_0" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_0" /></td>
-        </tr>
-		<tr>
-			<td><input style="" type="checkbox" id="cb_8" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_1" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_1" /></td>
-        </tr>
-		<tr>
-			<td><input style="" type="checkbox" id="cb_9" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_2" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_2" /></td>
-        </tr>
-		<tr>
-			<td><input style="" type="checkbox" id="cb_10" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_3" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_3" /></td>
-        </tr>
-		<tr>
-			<td><input style="" type="checkbox" id="cb_11" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_4" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_4" /></td>
-        </tr>
-		<tr>
-			<td><input style="" type="checkbox" id="cb_12" /></td>
-			<td><input style="width:120px;"type="text" id="custom_name_5" /></td>
-			<td><input style="width:300px;"type="text" id="custom_search_5" /></td>
-        </tr>
-	</table>
-	</div>
-	<div style="margin-top:5px;">辅助小功能：</div>
-	<input type="checkbox" id="cb_switch" /><label for="cb_switch">单击图标切换</label><br>
-	<input type="checkbox" id="cb_dref" checked="checked" disabled="true"/><label for="cb_dref">支持Google引用页重试直接访问</label>&nbsp;&nbsp;
-	<a href="http://xuhehuan.com/2272.html#SearchDirect" target="_blank">(?)</a>
-	</div>
-	<div style="float:right;margin-top:4px;"><img src='SearchCrutch.png' /><br>
-	</div>
-	</div>
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style_32x32" style="margin-top:15px;">
-		<span style="float:left;font-size:14px;margin:6px 10px 0 0;">分享到</span>
-		<a href="http://v.t.sina.com.cn/share/share.php?url=http://xuhehuan.com/2272.html&title=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。" class="jiathis_txt jtico jtico_tsina"  title="分享到新浪微博" target="_blank"></a>
+    <div id="heading"><img src='img/icon-48.png' /><h1>"搜索拐杖" 已安装 - 选项</h1></div>
+    <div id="options">
+    <div style="float:left;width:260px;">
+        搜索引擎快捷切换，关键词无需重输！<br>
+        <p>只显示我想切换的搜索：</p>
+        <input type="checkbox" id="cb_0" /><label for="cb_0">Google</label><br>
+        <input type="checkbox" id="cb_1" /><label id="lb_imgg"  for="cb_1">AOL Search</label>&nbsp;&nbsp;<a id="cb1_explain" href="#">(?)</a><br>
+        <div id="div_exp" style="display:none;" class="heighup">基于Google搜索结果提供服务的网站：<br><a href="http://www.aolsearch.com" target="_blank">http://www.aolsearch.com</a><br> 当Google无法访问时，可以用来代替Google。</div>
+        <input type="checkbox" id="cb_2" /><label for="cb_2">百度</label><br>
+        <input type="checkbox" id="cb_3" /><label for="cb_3">必应</label><br>
+        <input type="checkbox" id="cb_5" /><label for="cb_5">搜狗</label><br>
+        <input type="checkbox" id="cb_4" /><label for="cb_4">雅虎</label><br>
+        <input type="checkbox" id="cb_6" /><label for="cb_6">360搜索</label><br>
+        <div style="margin-top:5px;font-size:13px;font-weight:bold;">自定义搜索：
+        <a href="http://xuhehuan.com/2272.html#CustomSearch" target="_blank" title="如何配置？">(?)</a></div>
+        <div style="width:670px; height:165px; margin-top:5px;">
+        <table style="width:420; cellpadding:0; cellspacing:0;" >
+            <tr>
+                <td><input style="" type="checkbox" id="cb_7" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_0" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_0" /></td>
+            </tr>
+            <tr>
+                <td><input style="" type="checkbox" id="cb_8" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_1" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_1" /></td>
+            </tr>
+            <tr>
+                <td><input style="" type="checkbox" id="cb_9" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_2" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_2" /></td>
+            </tr>
+            <tr>
+                <td><input style="" type="checkbox" id="cb_10" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_3" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_3" /></td>
+            </tr>
+            <tr>
+                <td><input style="" type="checkbox" id="cb_11" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_4" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_4" /></td>
+            </tr>
+            <tr>
+                <td><input style="" type="checkbox" id="cb_12" /></td>
+                <td><input style="width:120px;"type="text" id="custom_name_5" /></td>
+                <td><input style="width:300px;"type="text" id="custom_search_5" /></td>
+            </tr>
+        </table>
+        </div>
+        <div style="margin-top:10px;font-size:13px;font-weight:bold;">辅助小功能：</div>
+        <input type="checkbox" id="cb_switch" /><label for="cb_switch">单击图标切换</label><br>
+        <input type="checkbox" id="cb_dref" checked="checked" disabled="true"/><label for="cb_dref">支持Google引用页重试直接访问</label>&nbsp;&nbsp;
+        <a href="http://xuhehuan.com/2272.html#SearchDirect" target="_blank">(?)</a>
+        <div style="margin-top:5px;font-size:13px;font-weight:bold;">数据云同步：</div>
+        <input type="button" id="cb_upload" value="备份数据" />
+        <input type="button" id="cb_download" value="恢复数据" /><br>
+    </div>
+    <div style="float:right;margin-top:4px;"><img src='SearchCrutch.png' /><br>
+    </div>
+    </div>
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_32x32" style="margin-top:15px;">
+        <span style="float:left;font-size:14px;margin:6px 10px 0 0;">分享到</span>
+        <a href="http://v.t.sina.com.cn/share/share.php?url=http://xuhehuan.com/2272.html&title=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。" class="jiathis_txt jtico jtico_tsina"  title="分享到新浪微博" target="_blank"></a>
         <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://xuhehuan.com/2272.html" class="jiathis_txt jtico jtico_qzone" title="分享到QQ空间" target="_blank"></a>
         <a href="http://twitter.com/home?status=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。+http://xuhehuan.com/2272.html" class="jiathis_txt jtico jtico_twitter"  title="分享到Twitter" target="_blank"></a>
-		<a href="http://www.douban.com/recommend/?url=http://xuhehuan.com/2272.html&title=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。" class="jiathis_txt jtico jtico_douban" title="分享到豆瓣" target="_blank"></a>
+        <a href="http://www.douban.com/recommend/?url=http://xuhehuan.com/2272.html&title=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。" class="jiathis_txt jtico jtico_douban" title="分享到豆瓣" target="_blank"></a>
         <a href="http://fanfou.com/sharer?u=http://xuhehuan.com/2272.html?t=挺有用的Chrome扩展“搜索拐杖”：Google抽风连不通时，方便切换到其他搜索，省的再次输入。用Chrome本来最怕的就是Google偶尔会挂掉，用这个方便多了。" class="jiathis_txt jtico jtico_fanfou" title="分享到饭否" target="_blank"></a>
-		<a href="http://share.renren.com/share/buttonshare.do?link=http://xuhehuan.com/2272.html" class="jiathis_txt jtico jtico_renren" title="分享到人人网" target="_blank"></a>
-		<a href="http://xuhehuan.com/2272.html" class="jiathis jiathis_txt jtico jtico_jiathis" title="查看开发者网站" target="_blank"></a>
-	</div>
-	<!-- JiaThis Button END -->
-	<div style="text-align:right;line-height:20px;font-size:10px;">反馈建议：请在<a href="http://xuhehuan.com/2272.html" target="_blank">搜索拐杖</a>文章下面留言<br><a href="#">KKKSou</a> 出品，<a href="http://xuhehuan.com" target="_blank">蔓草札记</a> 修改</div>
+        <a href="http://share.renren.com/share/buttonshare.do?link=http://xuhehuan.com/2272.html" class="jiathis_txt jtico jtico_renren" title="分享到人人网" target="_blank"></a>
+        <a href="http://xuhehuan.com/2272.html" class="jiathis jiathis_txt jtico jtico_jiathis" title="查看开发者网站" target="_blank"></a>
+    </div>
+    <!-- JiaThis Button END -->
+    <div style="text-align:right;line-height:20px;font-size:10px;">反馈建议：请在<a href="http://xuhehuan.com/2272.html" target="_blank">搜索拐杖</a>文章下面留言<br><a href="#">KKKSou</a> 出品，<a href="http://xuhehuan.com" target="_blank">蔓草札记</a> 修改</div>
 </div>
-<div id="status"></div>
 </div>    
 </body>
 <script type="text/javascript" src="js/saveoptions.js"></script>

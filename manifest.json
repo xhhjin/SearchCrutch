@@ -15,7 +15,8 @@
     "default_popup": "popup.html"
   },
   "permissions" : [
-    "tabs","*://*/*"
+    "tabs","*://*/*",
+    "storage"
   ],
   "options_ui": {
     "page": "options.html"
