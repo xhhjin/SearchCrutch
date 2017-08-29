@@ -88,12 +88,14 @@ function upload_options() {
     data["cb_switch"] = localStorage[ "cb_switch" ];
     data["backup_data"] = true;
     
-    chrome.storage.sync.clear(function(){});
-    chrome.storage.sync.set(data, function(){
+    chrome.storage.sync.clear(function(){
+        chrome.storage.sync.set(data, function(){
         if (!chrome.runtime.error) {
-            alert("数据备份成功！");
-        }
+                alert("数据备份成功！");
+            }
+        });
     });
+    
 }
 
 function download_options() {
