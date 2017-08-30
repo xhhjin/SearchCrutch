@@ -32,6 +32,10 @@ $("cb1_explain").addEventListener("click",explain);
 $("cb_upload").addEventListener("click",upload_options);      //云端同步数据
 $("cb_download").addEventListener("click",download_options);  //云端同步数据
 
+if (typeof browser === "undefined" && typeof chrome === "object"){
+    var browser = chrome; //On Chrome
+}
+
 // Saves options to localStorage.
 function save_options() {
     var i;
@@ -88,25 +92,23 @@ function upload_options() {
     data["cb_switch"] = localStorage[ "cb_switch" ];
     data["backup_data"] = true;
     
-    chrome.storage.sync.clear(function(){
-        chrome.storage.sync.set(data, function(){
-            if (!chrome.runtime.error) {
-                alert("数据备份成功！");
-            }
+    browser.storage.sync.clear(function(){
+        browser.storage.sync.set(data, function(){
+            alert("数据备份成功！");
         });
     });
     
 }
 
 function download_options() {
-    chrome.storage.sync.get("backup_data", function (item) { 
+    browser.storage.sync.get("backup_data", function (item) { 
         if(isEmpty(item)) {
             alert("您尚未备份过数据，请先点击“备份数据”按钮进行备份！");
         } else {
             var i;
             for( i=0; i<searchselect_array.length+search_custom_num; i++ ) {
                 var cb_id = "cb_" + i;
-                chrome.storage.sync.get(cb_id, function (item) { 
+                browser.storage.sync.get(cb_id, function (item) { 
                     for (var key in item) break;    //取第一个
                     localStorage[key] = item[key];
                 });
@@ -114,16 +116,16 @@ function download_options() {
             for( i=0; i<search_custom_num; i++ ) {
                 var custom_name_id = "custom_name_" + i;
                 var custom_search_id = "custom_search_" + i;
-                chrome.storage.sync.get(custom_name_id, function (item) { 
+                browser.storage.sync.get(custom_name_id, function (item) { 
                     for (var key in item) break;
                     localStorage[key] = item[key];
                 });
-                chrome.storage.sync.get(custom_search_id, function (item) { 
+                browser.storage.sync.get(custom_search_id, function (item) { 
                     for (var key in item) break;
                     localStorage[key] = item[key];
                 });
             }
-            chrome.storage.sync.get("cb_switch", function (item) { 
+            browser.storage.sync.get("cb_switch", function (item) { 
                 localStorage["cb_switch"] = item.cb_switch;
             });
             alert("数据恢复成功！");

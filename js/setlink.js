@@ -1,6 +1,10 @@
 /* global search_custom_num search_array insertCustomArray GetHost inHostArray searchhost_array searchselect_array */
 window.addEventListener("load", onLoad);
 
+if (typeof browser === "undefined" && typeof chrome === "object"){
+    var browser = chrome; //On Chrome
+}
+
 function onLoad() {
     window.removeEventListener("load", onLoad, false);
     for(var i=0; i<search_custom_num; i++ ) {
@@ -8,7 +12,7 @@ function onLoad() {
         var a_id = "a_" + id ;
         $( a_id ).textContent = localStorage[ "custom_name_" + i ];
     }
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
+    browser.tabs.query({currentWindow: true, active: true}, function(tabs){ 
         var tab = tabs[0];
         insertCustomArray();
         var host = GetHost(tab.url);

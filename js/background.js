@@ -1,18 +1,23 @@
 /* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty */
+// Avoid 'chrome' namespace
+if (typeof browser === "undefined" && typeof chrome === "object"){
+    var browser = chrome; //On Chrome
+}
+
 function checkForValidUrl(tabId, changeInfo, tab) {
     if( !changeInfo.status )
         return;
     //if( 'loading' != changeInfo.status )
     //	return;
     if( "chrome://newtab/" == tab.url ) {
-        chrome.pageAction.show(tabId);
+        browser.pageAction.show(tabId);
         return;
     }
     if( -1 < tab.url.substr(7,25).indexOf("www.google.com/reader") ) {
-        chrome.pageAction.setPopup({popup:"",tabId: tabId});
-        chrome.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tabId});
-        chrome.pageAction.setTitle({title:"一键切换HTTP/HTTPS",tabId: tabId});
-        chrome.pageAction.show(tabId);
+        browser.pageAction.setPopup({popup:"",tabId: tabId});
+        browser.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tabId});
+        browser.pageAction.setTitle({title:"一键切换HTTP/HTTPS",tabId: tabId});
+        browser.pageAction.show(tabId);
         return;
     }
     insertCustomArray();
@@ -21,25 +26,25 @@ function checkForValidUrl(tabId, changeInfo, tab) {
     if( -1 < i_host ) {
         //for direct visit from google refer url
         if( (1==searchhost_array[i_host][1] || 0 == searchhost_array[i_host][1] ) && ( 10 < tab.url.indexOf("url?") || 10 < tab.url.indexOf("imgres?") ) ) {
-            chrome.pageAction.setPopup({popup:"",tabId: tabId});
-            chrome.pageAction.setIcon({path:"img/icon-38-g.png",tabId: tabId});
-            chrome.pageAction.setTitle({title:"直接访问所在网页",tabId: tabId});
-            chrome.pageAction.show(tabId);
+            browser.pageAction.setPopup({popup:"",tabId: tabId});
+            browser.pageAction.setIcon({path:"img/icon-38-g.png",tabId: tabId});
+            browser.pageAction.setTitle({title:"直接访问所在网页",tabId: tabId});
+            browser.pageAction.show(tabId);
             return;
         }
         if( "checked" == localStorage["cb_switch"] ) {
-            chrome.pageAction.setPopup({popup: "", tabId: tab.id});
-            chrome.pageAction.setTitle({title:"点击切换搜索引擎",tabId: tabId});
-            chrome.pageAction.show(tabId);
+            browser.pageAction.setPopup({popup: "", tabId: tab.id});
+            browser.pageAction.setTitle({title:"点击切换搜索引擎",tabId: tabId});
+            browser.pageAction.show(tabId);
             return;
         }
-        chrome.pageAction.show(tabId);
+        browser.pageAction.show(tabId);
         return;
     }
 }
 
 // Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
+browser.tabs.onUpdated.addListener(checkForValidUrl);
  
 function ActionClick(tab) {
     if( -1 < tab.url.substr(7,25).indexOf("www.google.com/reader") ) {
@@ -51,9 +56,9 @@ function ActionClick(tab) {
             else
                 newurl = "https"+ oldurl.substr(4);
         }
-        chrome.tabs.update( tab.id, {url:newurl}, function(){});
+        browser.tabs.update( tab.id, {url:newurl}, function(){});
     } else if( "checked" == localStorage["cb_switch"] ) {
-        chrome.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tab.id});
+        browser.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tab.id});
         var index = 0;
         insertCustomArray();
         var host = GetHost(tab.url);
@@ -77,24 +82,25 @@ function ActionClick(tab) {
         else
             newurl = searchselect_array[index][3];
 
-        chrome.tabs.update( tab.id, {url:newurl}, function(){});
+        browser.tabs.update( tab.id, {url:newurl}, function(){});
     } else {
         args = GetUrlParms(tab.url);
         var ori_url = args[ "url" ];
         if( ori_url )
-            chrome.tabs.update( tab.id, {url: decodeURIComponent(ori_url) }, function(){});
+            browser.tabs.update( tab.id, {url: decodeURIComponent(ori_url) }, function(){});
         else {
             ori_url = args[ "imgrefurl" ];
             if( ori_url )
-                chrome.tabs.update( tab.id, {url: decodeURIComponent(ori_url) }, function(){});
+                browser.tabs.update( tab.id, {url: decodeURIComponent(ori_url) }, function(){});
         }
     }
 }
 
-chrome.pageAction.onClicked.addListener(ActionClick);
+// Listen for the click of the URL.
+browser.pageAction.onClicked.addListener(ActionClick);
 
 function ActionShortcut(tab, flag) {
-    chrome.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tab.id});
+    browser.pageAction.setIcon({path:"img/icon-38-b.png",tabId: tab.id});
     var index = 0;
     insertCustomArray();
     var host = GetHost(tab.url);
@@ -131,19 +137,19 @@ function ActionShortcut(tab, flag) {
     else
         newurl = searchselect_array[index][3];
 
-    chrome.tabs.update( tab.id, {url:newurl}, function(){});
+    browser.tabs.update( tab.id, {url:newurl}, function(){});
 }
 
 // Listen for these commands of shortcuts
-chrome.commands.onCommand.addListener(function(command) {
+browser.commands.onCommand.addListener(function(command) {
     switch ( command ) {
     case "switch-pre":
-        chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        browser.tabs.query({currentWindow: true, active: true}, function(tabs){
             ActionShortcut(tabs[0], command);
         });
         break;
     case "switch-next":
-        chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+        browser.tabs.query({currentWindow: true, active: true}, function(tabs){
             ActionShortcut(tabs[0], command);
         });
         break;
@@ -151,10 +157,10 @@ chrome.commands.onCommand.addListener(function(command) {
         break;
     }
 });
- 
+
 var firstRun = (localStorage["firstRun"] == "true");
 if (!firstRun) {
-    chrome.tabs.create({url:"options.html"},function() {});
+    browser.tabs.create({url:"options.html"},function() {});
     if (null == localStorage.getItem("cb_switch"))
         localStorage[ "cb_switch" ] = "no";
     if (null == localStorage.getItem("custom_name_0"))
@@ -179,12 +185,12 @@ if (!firstRun) {
     localStorage["firstRun"] = "true";
     
     // Sync the backup data
-    chrome.storage.sync.get("backup_data", function (item) { 
+    browser.storage.sync.get("backup_data", function (item) { 
         if(!isEmpty(item)) {
             var i;
             for( i=0; i<13; i++ ) {
                 var cb_id = "cb_" + i;
-                chrome.storage.sync.get(cb_id, function (item) { 
+                browser.storage.sync.get(cb_id, function (item) { 
                     for (var key in item) break;    //取第一个
                     localStorage[key] = item[key];
                 });
@@ -192,16 +198,16 @@ if (!firstRun) {
             for( i=0; i<6; i++ ) {
                 var custom_name_id = "custom_name_" + i;
                 var custom_search_id = "custom_search_" + i;
-                chrome.storage.sync.get(custom_name_id, function (item) { 
+                browser.storage.sync.get(custom_name_id, function (item) { 
                     for (var key in item) break;
                     localStorage[key] = item[key];
                 });
-                chrome.storage.sync.get(custom_search_id, function (item) { 
+                browser.storage.sync.get(custom_search_id, function (item) { 
                     for (var key in item) break;
                     localStorage[key] = item[key];
                 });
             }
-            chrome.storage.sync.get("cb_switch", function (item) { 
+            browser.storage.sync.get("cb_switch", function (item) { 
                 localStorage["cb_switch"] = item.cb_switch;
             });
         }

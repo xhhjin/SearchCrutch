@@ -13,13 +13,17 @@ $("a_10").addEventListener("click",CheckRedirect);       //自定义搜索4
 $("a_11").addEventListener("click",CheckRedirect);       //自定义搜索5
 $("a_12").addEventListener("click",CheckRedirect);       //自定义搜索6
 
+if (typeof browser === "undefined" && typeof chrome === "object"){
+    var browser = chrome; //On Chrome
+}
+
 function CheckRedirect( ) {
     var index = this.id.substr("a_".length);
     redirect(index);
 }
 
 function redirect( index ) {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){ 
+    browser.tabs.query({currentWindow: true, active: true}, function(tabs){ 
         var tab = tabs[0];
         var q ="", newurl;
         insertCustomArray();
@@ -34,7 +38,7 @@ function redirect( index ) {
         else
             newurl = searchselect_array[index][3];
 
-        chrome.tabs.update( tab.id, {url:newurl}, function(){});//*/
+        browser.tabs.update( tab.id, {url:newurl}, function(){});//*/
     });
     SetNowLink( index );
 }
