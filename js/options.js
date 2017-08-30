@@ -21,4 +21,8 @@ function restore_options() {
         $( "cb_switch" ).checked = "";
     else
         $( "cb_switch" ).checked = "checked";
+    if( "no" == localStorage["cb_autosync"] )
+        $( "cb_autosync" ).checked = "";
+    else
+        $( "cb_autosync" ).checked = "checked";
 }

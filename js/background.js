@@ -121,7 +121,7 @@ function ActionShortcut(tab, flag) {
                 index = 0;
             break;
         }
-		
+
         var cb_id = "cb_" + index;
         if( "checked" == localStorage[ cb_id ] )
             break;
@@ -158,9 +158,23 @@ browser.commands.onCommand.addListener(function(command) {
     }
 });
 
+// Listen for the changes in storage
+browser.storage.onChanged.addListener(function(changes) {
+    if( localStorage["cb_autosync"] != "checked")
+        return;
+    for (var key in changes) {
+        var itemChange = changes[key];
+        if (typeof itemChange.newValue != "undefined") {
+            localStorage[key] = itemChange.newValue;
+        }
+    }
+});
+
 var firstRun = (localStorage["firstRun"] == "true");
 if (!firstRun) {
     browser.tabs.create({url:"options.html"},function() {});
+    if (null == localStorage.getItem("cb_autosync"))
+        localStorage[ "cb_autosync" ] = "checked";
     if (null == localStorage.getItem("cb_switch"))
         localStorage[ "cb_switch" ] = "no";
     if (null == localStorage.getItem("custom_name_0"))
@@ -186,8 +200,23 @@ if (!firstRun) {
     
     // Sync the backup data
     browser.storage.sync.get("backup_data", function (item) { 
-        if(!isEmpty(item)) {
-            var i;
+        var i;
+        if(isEmpty(item)) {    // Upload
+            var data = new Object();
+            for( i=0; i<13; i++ ) {
+                var cb_id = "cb_" + i;
+                data[cb_id] = localStorage[ cb_id ];
+            }
+            for( i=0; i<6; i++ ) {
+                var custom_name_id = "custom_name_" + i;
+                var custom_search_id = "custom_search_" + i;
+                data[custom_name_id] = localStorage[ custom_name_id ];
+                data[custom_search_id] = localStorage[ custom_search_id ];
+            }
+            data["cb_switch"] = localStorage[ "cb_switch" ];
+            data["cb_autosync"] = localStorage[ "cb_autosync" ];
+            data["backup_data"] = true;
+        } else {    // Download
             for( i=0; i<13; i++ ) {
                 var cb_id = "cb_" + i;
                 browser.storage.sync.get(cb_id, function (item) { 
@@ -209,6 +238,9 @@ if (!firstRun) {
             }
             browser.storage.sync.get("cb_switch", function (item) { 
                 localStorage["cb_switch"] = item.cb_switch;
+            });
+            browser.storage.sync.get("cb_autosync", function (item) { 
+                localStorage["cb_autosync"] = item.cb_autosync;
             });
         }
     });

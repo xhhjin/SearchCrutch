@@ -29,8 +29,9 @@ $("custom_search_5").addEventListener("input",save_options);        //自定义�
 $("cb_switch").addEventListener("click",save_options);    //单击图标切换
 $("cb1_explain").addEventListener("click",explain);
 
-$("cb_upload").addEventListener("click",upload_options);      //云端同步数据
-$("cb_download").addEventListener("click",download_options);  //云端同步数据
+$("cb_autosync").addEventListener("click",save_options);      //自动同步云端数据
+$("cb_upload").addEventListener("click",upload_options);      //上传云端同步数据
+$("cb_download").addEventListener("click",download_options);  //下载云端同步数据
 
 if (typeof browser === "undefined" && typeof chrome === "object"){
     var browser = chrome; //On Chrome
@@ -50,6 +51,7 @@ function save_options() {
         localStorage[ custom_search_id ] = $(custom_search_id).value;
     }
     localStorage[ "cb_switch" ] = $("cb_switch").checked?"checked":"no";
+    localStorage[ "cb_autosync" ] = $("cb_autosync").checked?"checked":"no";
     
     var statusDiv=document.createElement("div");
     statusDiv.textContent = "选项已保存";
@@ -90,6 +92,7 @@ function upload_options() {
         data[custom_search_id] = localStorage[ custom_search_id ];
     }
     data["cb_switch"] = localStorage[ "cb_switch" ];
+    data["cb_autosync"] = localStorage[ "cb_autosync" ];
     data["backup_data"] = true;
     
     browser.storage.sync.clear(function(){
@@ -127,6 +130,9 @@ function download_options() {
             }
             browser.storage.sync.get("cb_switch", function (item) { 
                 localStorage["cb_switch"] = item.cb_switch;
+            });
+            browser.storage.sync.get("cb_autosync", function (item) { 
+                localStorage["cb_autosync"] = item.cb_autosync;
             });
             alert("数据恢复成功！");
             window.location.reload();
