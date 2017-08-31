@@ -1,7 +1,11 @@
 /* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch */
 function $(objStr){return document.getElementById(objStr);}
-var search_array =["google", "aol", "baidu","bing","yahoo","sogou","haosou"];
+// Avoid 'chrome' namespace
+if (typeof browser === "undefined" && typeof chrome === "object"){
+    var browser = chrome; //On Chrome
+}
 var search_custom_num = 6;
+var search_array =["google", "aol", "baidu","bing","yahoo","sogou","haosou"];
 
 var searchselect_array = 
 [

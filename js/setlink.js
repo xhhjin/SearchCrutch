@@ -1,10 +1,6 @@
 /* global search_custom_num search_array insertCustomArray GetHost inHostArray searchhost_array searchselect_array */
 window.addEventListener("load", onLoad);
 
-if (typeof browser === "undefined" && typeof chrome === "object"){
-    var browser = chrome; //On Chrome
-}
-
 function onLoad() {
     window.removeEventListener("load", onLoad, false);
     for(var i=0; i<search_custom_num; i++ ) {

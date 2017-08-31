@@ -1,9 +1,4 @@
-/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty */
-// Avoid 'chrome' namespace
-if (typeof browser === "undefined" && typeof chrome === "object"){
-    var browser = chrome; //On Chrome
-}
-
+/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty search_custom_num */
 function checkForValidUrl(tabId, changeInfo, tab) {
     if( !changeInfo.status )
         return;
@@ -181,7 +176,7 @@ if (!firstRun) {
         localStorage[ "custom_name_0" ] = "请输入名称";
     if (null == localStorage.getItem("custom_search_0"))
         localStorage[ "custom_search_0" ] = "请输入路径";
-    for( var i=1; i<6; i++ ) { // 6 = search_custom_num
+    for( var i=1; i<search_custom_num; i++ ) { // 6 = search_custom_num
         var custom_name_id   = "custom_name_" + i;
         var custom_search_id   = "custom_search_" + i;
         if (null == localStorage.getItem(custom_name_id))
@@ -189,7 +184,7 @@ if (!firstRun) {
         if (null == localStorage.getItem(custom_search_id))
             localStorage[custom_search_id] = "";
     }
-    for( i=0; i<13; i++ ) { // 13 = search_array.length+search_custom_num   
+    for( i=0; i<search_array.length+search_custom_num; i++ ) { // 13 = search_array.length+search_custom_num   
         var cb_id = "cb_" + i;
         localStorage[cb_id] = "no";
     }
@@ -200,16 +195,16 @@ if (!firstRun) {
     
     // Sync the backup data
     browser.storage.sync.get("backup_data", function (item) { 
-        var i;
+        var i, cb_id, custom_name_id, custom_search_id;
         if(isEmpty(item)) {    // Upload
             var data = new Object();
-            for( i=0; i<13; i++ ) {
-                var cb_id = "cb_" + i;
+            for( i=0; i<search_array.length+search_custom_num; i++ ) {
+                cb_id = "cb_" + i;
                 data[cb_id] = localStorage[ cb_id ];
             }
-            for( i=0; i<6; i++ ) {
-                var custom_name_id = "custom_name_" + i;
-                var custom_search_id = "custom_search_" + i;
+            for( i=0; i<search_custom_num; i++ ) {
+                custom_name_id = "custom_name_" + i;
+                custom_search_id = "custom_search_" + i;
                 data[custom_name_id] = localStorage[ custom_name_id ];
                 data[custom_search_id] = localStorage[ custom_search_id ];
             }
@@ -217,16 +212,16 @@ if (!firstRun) {
             data["cb_autosync"] = localStorage[ "cb_autosync" ];
             data["backup_data"] = true;
         } else {    // Download
-            for( i=0; i<13; i++ ) {
-                var cb_id = "cb_" + i;
+            for( i=0; i<search_array.length+search_custom_num; i++ ) {
+                cb_id = "cb_" + i;
                 browser.storage.sync.get(cb_id, function (item) { 
                     for (var key in item) break;    //取第一个
                     localStorage[key] = item[key];
                 });
             }
-            for( i=0; i<6; i++ ) {
-                var custom_name_id = "custom_name_" + i;
-                var custom_search_id = "custom_search_" + i;
+            for( i=0; i<search_custom_num; i++ ) {
+                custom_name_id = "custom_name_" + i;
+                custom_search_id = "custom_search_" + i;
                 browser.storage.sync.get(custom_name_id, function (item) { 
                     for (var key in item) break;
                     localStorage[key] = item[key];

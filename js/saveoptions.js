@@ -33,10 +33,6 @@ $("cb_autosync").addEventListener("click",save_options);      //自动同步云�
 $("cb_upload").addEventListener("click",upload_options);      //上传云端同步数据
 $("cb_download").addEventListener("click",download_options);  //下载云端同步数据
 
-if (typeof browser === "undefined" && typeof chrome === "object"){
-    var browser = chrome; //On Chrome
-}
-
 // Saves options to localStorage.
 function save_options() {
     var i;

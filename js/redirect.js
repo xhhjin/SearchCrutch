@@ -13,10 +13,6 @@ $("a_10").addEventListener("click",CheckRedirect);       //自定义搜索4
 $("a_11").addEventListener("click",CheckRedirect);       //自定义搜索5
 $("a_12").addEventListener("click",CheckRedirect);       //自定义搜索6
 
-if (typeof browser === "undefined" && typeof chrome === "object"){
-    var browser = chrome; //On Chrome
-}
-
 function CheckRedirect( ) {
     var index = this.id.substr("a_".length);
     redirect(index);
