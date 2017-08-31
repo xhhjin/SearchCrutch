@@ -1,4 +1,4 @@
-/* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch */
+/* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch dataBackup dataRecover */
 function $(objStr){return document.getElementById(objStr);}
 // Avoid 'chrome' namespace
 var isChrome = false; //On Chrome
@@ -169,7 +169,7 @@ function dataBackup() {
 }
 function dataRecover() {
     for(var i=0; i<search_array.length+search_custom_num; i++ ) {
-        cb_id = "cb_" + i;
+        var cb_id = "cb_" + i;
         if(isChrome) {
             browser.storage.sync.get(cb_id, function (item) { 
                 for (var key in item) break;    //取第一个
@@ -183,8 +183,8 @@ function dataRecover() {
         }
     }
     for( i=0; i<search_custom_num; i++ ) {
-        custom_name_id = "custom_name_" + i;
-        custom_search_id = "custom_search_" + i;
+        var custom_name_id = "custom_name_" + i;
+        var custom_search_id = "custom_search_" + i;
         if(isChrome) {
             browser.storage.sync.get(custom_name_id, function (item) { 
                 for (var key in item) break;

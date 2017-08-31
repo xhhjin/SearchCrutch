@@ -1,4 +1,4 @@
-/* global searchselect_array search_custom_num isEmpty */
+/* global searchselect_array search_custom_num isEmpty  dataBackup dataRecover */
 $("cb_0").addEventListener("click",save_options);        //谷歌
 $("cb_1").addEventListener("click",save_options);        //谷歌复原
 $("cb_2").addEventListener("click",save_options);        //百度

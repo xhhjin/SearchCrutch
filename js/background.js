@@ -1,4 +1,4 @@
-/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty search_custom_num */
+/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty search_custom_num dataBackup dataRecover */
 function checkForValidUrl(tabId, changeInfo, tab) {
     if( !changeInfo.status )
         return;
@@ -154,8 +154,8 @@ browser.commands.onCommand.addListener(function(command) {
 });
 
 // Listen for the changes in storage
-browser.storage.onChanged.addListener(function(changes) {
-    if( localStorage["cb_autosync"] != "checked")
+browser.storage.onChanged.addListener(function(changes, area) {
+    if( localStorage["cb_autosync"] != "checked" && area != "sync")
         return;
     for (var key in changes) {
         var itemChange = changes[key];
@@ -195,7 +195,6 @@ if (!firstRun) {
     
     // Sync the backup data
     browser.storage.sync.get("backup_data", function (item) { 
-        var i, cb_id, custom_name_id, custom_search_id;
         if(isEmpty(item)) {    // Upload
             dataBackup();
         } else {    // Download
