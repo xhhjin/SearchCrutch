@@ -1,8 +1,10 @@
 /* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch */
 function $(objStr){return document.getElementById(objStr);}
 // Avoid 'chrome' namespace
+var isChrome = false; //On Chrome
 if (typeof browser === "undefined" && typeof chrome === "object"){
     var browser = chrome; //On Chrome
+    isChrome = true;
 }
 var search_custom_num = 6;
 var search_array =["google", "aol", "baidu","bing","yahoo","sogou","haosou"];
@@ -138,5 +140,84 @@ function getSearch( host ) {
             if( -1 < host.indexOf( search_array[i] ) )
                 return search_array[i];
         }
+    }
+}
+function dataBackup() {
+    var data = new Object();
+    for(var i=0; i<searchselect_array.length+search_custom_num; i++ ) {
+        var cb_id = "cb_" + i;
+        data[cb_id] = localStorage[ cb_id ];
+    }
+    for( i=0; i<search_custom_num; i++ ) {
+        var custom_name_id = "custom_name_" + i;
+        var custom_search_id = "custom_search_" + i;
+        data[custom_name_id] = localStorage[ custom_name_id ];
+        data[custom_search_id] = localStorage[ custom_search_id ];
+    }
+    data["cb_switch"] = localStorage[ "cb_switch" ];
+    data["cb_autosync"] = localStorage[ "cb_autosync" ];
+    data["backup_data"] = true;
+    if(isChrome) {
+        browser.storage.sync.clear(function(){
+            browser.storage.sync.set(data, function(){});
+        });
+    } else {
+        browser.storage.local.clear().then( () => {
+            browser.storage.sync.set(data);
+        }, null);
+    }
+}
+function dataRecover() {
+    for(var i=0; i<search_array.length+search_custom_num; i++ ) {
+        cb_id = "cb_" + i;
+        if(isChrome) {
+            browser.storage.sync.get(cb_id, function (item) { 
+                for (var key in item) break;    //取第一个
+                localStorage[key] = item[key];
+            });
+        } else {
+            browser.storage.sync.get(cb_id).then( (item) => { 
+                for (var key in item) break;    //取第一个
+                localStorage[key] = item[key];
+            }, null);
+        }
+    }
+    for( i=0; i<search_custom_num; i++ ) {
+        custom_name_id = "custom_name_" + i;
+        custom_search_id = "custom_search_" + i;
+        if(isChrome) {
+            browser.storage.sync.get(custom_name_id, function (item) { 
+                for (var key in item) break;
+                localStorage[key] = item[key];
+            });
+            browser.storage.sync.get(custom_search_id, function (item) { 
+                for (var key in item) break;
+                localStorage[key] = item[key];
+            });
+        } else {
+            browser.storage.sync.get(custom_name_id).then( (item) => { 
+                for (var key in item) break;
+                localStorage[key] = item[key];
+            }, null);
+            browser.storage.sync.get(custom_search_id).then( (item) => { 
+                for (var key in item) break;
+                localStorage[key] = item[key];
+            }, null);
+        }
+    }
+    if(isChrome) {
+        browser.storage.sync.get("cb_switch", function (item) { 
+            localStorage["cb_switch"] = item.cb_switch;
+        });
+        browser.storage.sync.get("cb_autosync", function (item) { 
+            localStorage["cb_autosync"] = item.cb_autosync;
+        });
+    } else {
+        browser.storage.sync.get("cb_switch").then( (item) => { 
+            localStorage["cb_switch"] = item.cb_switch;
+        }, null);
+        browser.storage.sync.get("cb_autosync").then( (item) => { 
+            localStorage["cb_autosync"] = item.cb_autosync;
+        }, null);
     }
 }

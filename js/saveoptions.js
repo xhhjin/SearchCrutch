@@ -75,28 +75,8 @@ function explain() {
 }
 
 function upload_options() {
-    var i;
-    var data = new Object();
-    for( i=0; i<searchselect_array.length+search_custom_num; i++ ) {
-        var cb_id = "cb_" + i;
-        data[cb_id] = localStorage[ cb_id ];
-    }
-    for( i=0; i<search_custom_num; i++ ) {
-        var custom_name_id = "custom_name_" + i;
-        var custom_search_id = "custom_search_" + i;
-        data[custom_name_id] = localStorage[ custom_name_id ];
-        data[custom_search_id] = localStorage[ custom_search_id ];
-    }
-    data["cb_switch"] = localStorage[ "cb_switch" ];
-    data["cb_autosync"] = localStorage[ "cb_autosync" ];
-    data["backup_data"] = true;
-    
-    browser.storage.sync.clear(function(){
-        browser.storage.sync.set(data, function(){
-            alert("数据备份成功！");
-        });
-    });
-    
+    dataBackup();
+    alert("数据备份成功！");
 }
 
 function download_options() {
@@ -104,32 +84,7 @@ function download_options() {
         if(isEmpty(item)) {
             alert("您尚未备份过数据，请先点击“备份数据”按钮进行备份！");
         } else {
-            var i;
-            for( i=0; i<searchselect_array.length+search_custom_num; i++ ) {
-                var cb_id = "cb_" + i;
-                browser.storage.sync.get(cb_id, function (item) { 
-                    for (var key in item) break;    //取第一个
-                    localStorage[key] = item[key];
-                });
-            }
-            for( i=0; i<search_custom_num; i++ ) {
-                var custom_name_id = "custom_name_" + i;
-                var custom_search_id = "custom_search_" + i;
-                browser.storage.sync.get(custom_name_id, function (item) { 
-                    for (var key in item) break;
-                    localStorage[key] = item[key];
-                });
-                browser.storage.sync.get(custom_search_id, function (item) { 
-                    for (var key in item) break;
-                    localStorage[key] = item[key];
-                });
-            }
-            browser.storage.sync.get("cb_switch", function (item) { 
-                localStorage["cb_switch"] = item.cb_switch;
-            });
-            browser.storage.sync.get("cb_autosync", function (item) { 
-                localStorage["cb_autosync"] = item.cb_autosync;
-            });
+            dataRecover();
             alert("数据恢复成功！");
             window.location.reload();
         }

@@ -197,46 +197,9 @@ if (!firstRun) {
     browser.storage.sync.get("backup_data", function (item) { 
         var i, cb_id, custom_name_id, custom_search_id;
         if(isEmpty(item)) {    // Upload
-            var data = new Object();
-            for( i=0; i<search_array.length+search_custom_num; i++ ) {
-                cb_id = "cb_" + i;
-                data[cb_id] = localStorage[ cb_id ];
-            }
-            for( i=0; i<search_custom_num; i++ ) {
-                custom_name_id = "custom_name_" + i;
-                custom_search_id = "custom_search_" + i;
-                data[custom_name_id] = localStorage[ custom_name_id ];
-                data[custom_search_id] = localStorage[ custom_search_id ];
-            }
-            data["cb_switch"] = localStorage[ "cb_switch" ];
-            data["cb_autosync"] = localStorage[ "cb_autosync" ];
-            data["backup_data"] = true;
+            dataBackup();
         } else {    // Download
-            for( i=0; i<search_array.length+search_custom_num; i++ ) {
-                cb_id = "cb_" + i;
-                browser.storage.sync.get(cb_id, function (item) { 
-                    for (var key in item) break;    //取第一个
-                    localStorage[key] = item[key];
-                });
-            }
-            for( i=0; i<search_custom_num; i++ ) {
-                custom_name_id = "custom_name_" + i;
-                custom_search_id = "custom_search_" + i;
-                browser.storage.sync.get(custom_name_id, function (item) { 
-                    for (var key in item) break;
-                    localStorage[key] = item[key];
-                });
-                browser.storage.sync.get(custom_search_id, function (item) { 
-                    for (var key in item) break;
-                    localStorage[key] = item[key];
-                });
-            }
-            browser.storage.sync.get("cb_switch", function (item) { 
-                localStorage["cb_switch"] = item.cb_switch;
-            });
-            browser.storage.sync.get("cb_autosync", function (item) { 
-                localStorage["cb_autosync"] = item.cb_autosync;
-            });
+            dataRecover();
         }
     });
 }
