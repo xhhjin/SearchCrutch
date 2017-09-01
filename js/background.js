@@ -172,11 +172,7 @@ if (!firstRun) {
         localStorage[ "cb_autosync" ] = "checked";
     if (null == localStorage.getItem("cb_switch"))
         localStorage[ "cb_switch" ] = "no";
-    if (null == localStorage.getItem("custom_name_0"))
-        localStorage[ "custom_name_0" ] = "请输入名称";
-    if (null == localStorage.getItem("custom_search_0"))
-        localStorage[ "custom_search_0" ] = "请输入路径";
-    for( var i=1; i<search_custom_num; i++ ) { // 6 = search_custom_num
+    for( var i=0; i<search_custom_num; i++ ) { // 6 = search_custom_num
         var custom_name_id   = "custom_name_" + i;
         var custom_search_id   = "custom_search_" + i;
         if (null == localStorage.getItem(custom_name_id))
