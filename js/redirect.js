@@ -24,15 +24,39 @@ function redirect( index ) {
         var q ="", newurl;
         insertCustomArray();
         var host = GetHost(tab.url);
-        var i_host = inHostArray(host) ;
+        var i_host = inHostArray(host);
         var args = GetUrlParms(tab.url);
+        var search_key = searchselect_array[ searchhost_array[i_host][1] ][2];
         if( -1 < i_host ) {
-            q = args[ searchselect_array[ searchhost_array[i_host][1] ][2] ];
+            if(search_key == "%s") {
+                search_key = searchselect_array[ searchhost_array[i_host][1] ][1];
+                search_key = search_key.toLowerCase();
+                search_key = search_key.substring(0, search_key.indexOf("%s"));
+                search_key = search_key.match(/[^?#&/]*$/);
+                if(search_key != null) {
+                    if(search_key[0].match("="))
+                        search_key = search_key[0].replace("=",  "");
+                    else
+                        search_key ="q"
+                    q = args[search_key]; // search word
+                } else {
+                    q = args["q"]; // Protection, should not step into this
+                }
+            } else {
+                q = args[search_key];
+            }
         }
-        if(q)
-            newurl = searchselect_array[index][1] + q;
-        else
+        search_key = searchselect_array[index][2];
+        if(q) {
+            if(search_key=="%s") {
+                newurl = searchselect_array[index][1].replace(/%s/i,  q);;
+            } else {
+                newurl = searchselect_array[index][1] + q;
+            }
+           
+        } else {
             newurl = searchselect_array[index][3];
+        }
 
         browser.tabs.update( tab.id, {url:newurl}, function(){});//*/
     });

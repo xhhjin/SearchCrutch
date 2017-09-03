@@ -45,7 +45,7 @@ function insertCustomArray() {
     if (null == localStorage.getItem("custom_search_0"))
         return;
     var i;
-    for(i=search_array.length; i>7; i--) {	// 判断是否需要删除尾部追加的自定义搜索
+    for(i=search_array.length; i>7; i--) {  // 判断是否需要删除尾部追加的自定义搜索
         search_array.pop();
         searchhost_array.pop();
         searchselect_array.pop();
@@ -60,13 +60,17 @@ function insertCustomArray() {
         insert_array = [GetHost(custom_search), 7+i];
         searchhost_array.push(insert_array);
         var qstr_array = "q";
-        var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;	// q=    search=    keyword=
-        qstr_array = custom_search.toLowerCase().match(regexp);
-        if( qstr_array != null ) {
-            qstr_array = qstr_array[qstr_array.length-1];
-            qstr_array = qstr_array.substr(1, qstr_array.length-2);
+        var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
+        if(custom_search.toLowerCase().match("%s")) {
+            qstr_array = "%s";
         } else {
-            qstr_array = "q";
+            qstr_array = custom_search.toLowerCase().match(regexp);
+            if( qstr_array != null ) {
+                qstr_array = qstr_array[qstr_array.length-1];
+                qstr_array = qstr_array.substr(1, qstr_array.length-2);
+            } else {
+                qstr_array = "q";
+            }
         }
         insert_array = [custom_name, custom_search, qstr_array, "http://"+GetHost(custom_search)];
         searchselect_array.push(insert_array);
@@ -90,7 +94,7 @@ function GetUrlParms(hrefstr) {
     } else if( hrefstr.match("//www.soku.com/search_video/q_") != null ) { //针对Soku的情况 http://www.soku.com/search_video/q_dd 替换 q_ 为 ?q=
         var end = hrefstr.indexOf("?");
         if (end>0)
-            hrefstr = hrefstr.substring(0, end);	// 移除?之后的内容 http://www.soku.com/search_video/q_dd?f=1
+            hrefstr = hrefstr.substring(0, end);    // 移除?之后的内容 http://www.soku.com/search_video/q_dd?f=1
         hrefstr = hrefstr.replace(/^https?:\/\/www\.soku\.com\/search_video\/q_/, "http://www.soku.com/search_video/?q=");
     } else if( hrefstr.match("//s.weibo.com/weibo/") != null ) { //针对微博搜索的情况 http://s.weibo.com/weibo/dd 添加 ?q=
         hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/weibo\//, "http://s.weibo.com/weibo/?q=");
