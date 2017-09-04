@@ -85,6 +85,7 @@ function inHostArray(host) {
 }
 function GetUrlParms(hrefstr) {
     var args=new Object();
+    hrefstr = decodeURI(hrefstr);
     //针对Google的情况，防止关键字分错，https://www.google.co.uk/?gws_rd=ssl#q=dd    https://www.google.co.jp/?gws_rd=ssl,cr#q=dd
     hrefstr = hrefstr.replace(/\?gws_rd=([^#?&]+)/,"");
     //针对Google的情况 https://ipv4.google.com/sorry/index?continue=https://www.google.com.hk/search%3Fq%3Ddd    //https://ipv4.google.com/sorry/IndexRedirect?continue=https://www.google.com/search%3Fq%3Ddd

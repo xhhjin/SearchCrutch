@@ -37,7 +37,7 @@ function redirect( index ) {
                     if(search_key[0].match("="))
                         search_key = search_key[0].replace("=",  "");
                     else
-                        search_key ="q"
+                        search_key ="q";
                     q = args[search_key]; // search word
                 } else {
                     q = args["q"]; // Protection, should not step into this
@@ -49,7 +49,7 @@ function redirect( index ) {
         search_key = searchselect_array[index][2];
         if(q) {
             if(search_key=="%s") {
-                newurl = searchselect_array[index][1].replace(/%s/i,  q);;
+                newurl = searchselect_array[index][1].replace(/%s/i,  q);
             } else {
                 newurl = searchselect_array[index][1] + q;
             }
