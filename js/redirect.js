@@ -1,6 +1,6 @@
 /* global $ insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array SetNowLink */
 $("a_0").addEventListener("click",CheckRedirect);        //谷歌
-$("a_1").addEventListener("click",CheckRedirect);        //AOL Search
+$("a_1").addEventListener("click",CheckRedirect);        //替代谷歌的搜索引擎
 $("a_2").addEventListener("click",CheckRedirect);        //百度
 $("a_3").addEventListener("click",CheckRedirect);        //必应
 $("a_4").addEventListener("click",CheckRedirect);        //雅虎

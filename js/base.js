@@ -7,12 +7,12 @@ if (typeof browser === "undefined" && typeof chrome === "object"){
     isChrome = true;
 }
 var search_custom_num = 6;
-var search_array =["google", "aol", "baidu","bing","yahoo","sogou","haosou"];
+var search_array =["google", "rambler", "baidu","bing","yahoo","sogou","haosou"];
 
 var searchselect_array = 
 [
     ["Google","https://www.google.com.hk/search?hl=zh-CN&newwindow=1&q=","q","https://www.google.com.hk"],
-    ["AOL Search","http://www.aolsearch.com/search?q=","q","http://www.aolsearch.com"],
+    ["Rambler","https://nova.rambler.ru/search?query=","query","https://nova.rambler.ru"],
     ["百度","https://www.baidu.com/s?wd=","wd","https://www.baidu.com"],
     ["必应","https://cn.bing.com/search?q=","q","https://cn.bing.com"],
     ["雅虎","https://search.yahoo.com/search?p=","p","https://search.yahoo.com"],
@@ -25,8 +25,8 @@ var searchhost_array =
     ["www.google.com.hk",0],
     ["ipv4.google.com",0],
     [/www.google(\.\w+){1,2}/,0],
-    ["www.aolsearch.com",1],
-    ["search.aol.com",1],
+    ["r0.ru",1],
+    ["nova.rambler.ru",1],
     ["www.baidu.com",2],
     ["cn.bing.com",3],
     ["www.bing.com",3],
