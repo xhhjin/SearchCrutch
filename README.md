@@ -13,5 +13,5 @@
 
 ## 安装地址
 - Edge 外接程序：[点击安装](https://microsoftedge.microsoft.com/addons/detail/%E6%90%9C%E7%B4%A2%E6%8B%90%E6%9D%96/cniecfnnkipcbgnbopieadadhpppfjlm)
-- Chrome 应用商店：[点击安装](https://chrome.google.com/webstore/detail/%E6%90%9C%E7%B4%A2%E6%8B%90%E6%9D%96/bgenmocoeejdpobiakjlppafcdimnfho)
 - Firefox 附件组件：[点击安装](https://addons.mozilla.org/firefox/addon/搜索拐杖/)
+- Chrome 应用商店：[点击安装](https://chrome.google.com/webstore/detail/%E6%90%9C%E7%B4%A2%E6%8B%90%E6%9D%96/bgenmocoeejdpobiakjlppafcdimnfho)
