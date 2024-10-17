@@ -1,21 +1,22 @@
 {
   "name": "搜索拐杖",
   "version": "3.27",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "在Google，百度，必应等等搜索引擎间进行快捷切换，搜索关键词无需重输！",
   "homepage_url": "http://xuhehuan.com/2272.html",
-  "background" : { "scripts": ["js/base.js", "js/background.js"] },
-  "page_action" :
-  {
+  "background" : {
+    "service_worker": "js/background.js"
+  },
+  "action": { 
     "default_icon": {
-         "19": "img/icon-19.png",
-         "38": "img/icon-38.png"
-      },
+      "19": "img/icon-19.png",
+      "38": "img/icon-38.png"
+    },
     "default_title" : "点此切换搜索",
     "default_popup": "popup.html"
   },
   "permissions" : [
-    "tabs","*://*/*",
+    "tabs",
     "storage"
   ],
   "options_ui": {
@@ -34,6 +35,7 @@
       "strict_min_version": "48.0"
     }
   },
+  "minimum_chrome_version": "93",
   "commands": {
     "switch-pre": {
       "suggested_key": {

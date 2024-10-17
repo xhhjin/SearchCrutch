@@ -42,39 +42,41 @@ function isEmpty(obj) {
     return true;
 }
 function insertCustomArray() {
-    if (null == localStorage.getItem("custom_search_0"))
-        return;
-    var i;
-    for(i=search_array.length; i>7; i--) {  // 判断是否需要删除尾部追加的自定义搜索
-        search_array.pop();
-        searchhost_array.pop();
-        searchselect_array.pop();
-    }
-    for(i=0; i<search_custom_num; i++) {
-        var custom_name_id = "custom_name_" + i;
-        var custom_search_id = "custom_search_" + i;
-        var insert_array = "custom_" + i;
-        var custom_name  = localStorage[ custom_name_id ];
-        var custom_search = localStorage[custom_search_id];	
-        search_array.push(insert_array);
-        insert_array = [GetHost(custom_search), 7+i];
-        searchhost_array.push(insert_array);
-        var qstr_array = "q";
-        var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
-        if(custom_search.toLowerCase().match("%s")) {
-            qstr_array = "%s";
-        } else {
-            qstr_array = custom_search.toLowerCase().match(regexp);
-            if( qstr_array != null ) {
-                qstr_array = qstr_array[qstr_array.length-1];
-                qstr_array = qstr_array.substr(1, qstr_array.length-2);
-            } else {
-                qstr_array = "q";
-            }
+    browser.storage.local.get(null, function(result) {
+        if (null == result["custom_search_0"])
+            return;
+        var i;
+        for(i=search_array.length; i>7; i--) {  // 判断是否需要删除尾部追加的自定义搜索
+            search_array.pop();
+            searchhost_array.pop();
+            searchselect_array.pop();
         }
-        insert_array = [custom_name, custom_search, qstr_array, "http://"+GetHost(custom_search)];
-        searchselect_array.push(insert_array);
-    }
+        for(i=0; i<search_custom_num; i++) {
+            var custom_name_id = "custom_name_" + i;
+            var custom_search_id = "custom_search_" + i;
+            var insert_array = "custom_" + i;
+            var custom_name  = result[ custom_name_id ];
+            var custom_search = result[custom_search_id];	
+            search_array.push(insert_array);
+            insert_array = [GetHost(custom_search), 7+i];
+            searchhost_array.push(insert_array);
+            var qstr_array = "q";
+            var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
+            if(custom_search.toLowerCase().match("%s")) {
+                qstr_array = "%s";
+            } else {
+                qstr_array = custom_search.toLowerCase().match(regexp);
+                if( qstr_array != null ) {
+                    qstr_array = qstr_array[qstr_array.length-1];
+                    qstr_array = qstr_array.substr(1, qstr_array.length-2);
+                } else {
+                    qstr_array = "q";
+                }
+            }
+            insert_array = [custom_name, custom_search, qstr_array, "http://"+GetHost(custom_search)];
+            searchselect_array.push(insert_array);
+        }
+    });
 }
 function inHostArray(host) {
     for(var i=0;i<searchhost_array.length;i++) {
@@ -148,29 +150,31 @@ function getSearch( host ) {
     }
 }
 function dataBackup() {
-    var data = new Object();
-    for(var i=0; i<searchselect_array.length+search_custom_num; i++ ) {
-        var cb_id = "cb_" + i;
-        data[cb_id] = localStorage[ cb_id ];
-    }
-    for( i=0; i<search_custom_num; i++ ) {
-        var custom_name_id = "custom_name_" + i;
-        var custom_search_id = "custom_search_" + i;
-        data[custom_name_id] = localStorage[ custom_name_id ];
-        data[custom_search_id] = localStorage[ custom_search_id ];
-    }
-    data["cb_switch"] = localStorage[ "cb_switch" ];
-    data["cb_autosync"] = localStorage[ "cb_autosync" ];
-    data["backup_data"] = true;
-    if(isChrome) {
-        browser.storage.sync.clear(function(){
-            browser.storage.sync.set(data, function(){});
-        });
-    } else {
-        browser.storage.local.clear().then( () => {
-            browser.storage.sync.set(data);
-        }, null);
-    }
+    browser.storage.local.get(null, function(result) {
+        var data = new Object();
+        for(var i=0; i<searchselect_array.length+search_custom_num; i++ ) {
+            var cb_id = "cb_" + i;
+            data[cb_id] = result[ cb_id ];
+        }
+        for( i=0; i<search_custom_num; i++ ) {
+            var custom_name_id = "custom_name_" + i;
+            var custom_search_id = "custom_search_" + i;
+            data[custom_name_id] = result[ custom_name_id ];
+            data[custom_search_id] = result[ custom_search_id ];
+        }
+        data["cb_switch"] = result[ "cb_switch" ];
+        data["cb_autosync"] = result[ "cb_autosync" ];
+        data["backup_data"] = true;
+        if(isChrome) {
+            browser.storage.sync.clear(function(){
+                browser.storage.sync.set(data, function(){});
+            });
+        } else {
+            browser.storage.local.clear().then( () => {
+                browser.storage.sync.set(data);
+            }, null);
+        }
+    });
 }
 function dataRecover() {
     for(var i=0; i<search_array.length+search_custom_num; i++ ) {
@@ -178,12 +182,12 @@ function dataRecover() {
         if(isChrome) {
             browser.storage.sync.get(cb_id, function (item) { 
                 for (var key in item) break;    //取第一个
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             });
         } else {
             browser.storage.sync.get(cb_id).then( (item) => { 
                 for (var key in item) break;    //取第一个
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             }, null);
         }
     }
@@ -193,36 +197,36 @@ function dataRecover() {
         if(isChrome) {
             browser.storage.sync.get(custom_name_id, function (item) { 
                 for (var key in item) break;
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             });
             browser.storage.sync.get(custom_search_id, function (item) { 
                 for (var key in item) break;
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             });
         } else {
             browser.storage.sync.get(custom_name_id).then( (item) => { 
                 for (var key in item) break;
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             }, null);
             browser.storage.sync.get(custom_search_id).then( (item) => { 
                 for (var key in item) break;
-                localStorage[key] = item[key];
+                browser.storage.local.set({[key] : item[key]});
             }, null);
         }
     }
     if(isChrome) {
         browser.storage.sync.get("cb_switch", function (item) { 
-            localStorage["cb_switch"] = item.cb_switch;
+            browser.storage.local.set({"cb_switch" : item.cb_switch});
         });
         browser.storage.sync.get("cb_autosync", function (item) { 
-            localStorage["cb_autosync"] = item.cb_autosync;
+            browser.storage.local.set({"cb_autosync" : item.cb_autosync});
         });
     } else {
         browser.storage.sync.get("cb_switch").then( (item) => { 
-            localStorage["cb_switch"] = item.cb_switch;
+            browser.storage.local.set({"cb_switch" : item.cb_switch});
         }, null);
         browser.storage.sync.get("cb_autosync").then( (item) => { 
-            localStorage["cb_autosync"] = item.cb_autosync;
+            browser.storage.local.set({"cb_autosync" : item.cb_autosync});
         }, null);
     }
 }
