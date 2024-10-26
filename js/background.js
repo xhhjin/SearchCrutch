@@ -1,4 +1,4 @@
-importScripts('./base.js')
+importScripts('./base.js');
 
 /* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty search_custom_num dataBackup dataRecover */
 function checkForValidUrl(tabId, changeInfo, tab) {
