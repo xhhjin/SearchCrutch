@@ -26,7 +26,8 @@ $("custom_search_4").addEventListener("input",save_options);        //自定义�
 $("custom_name_5").addEventListener("input",save_options);          //自定义名称
 $("custom_search_5").addEventListener("input",save_options);        //自定义搜索
 
-$("cb_switch").addEventListener("click",save_options);    //单击图标切换
+$("cb_switch").addEventListener("click",save_options);      //单击图标切换
+$("cb_pop_close").addEventListener("click",save_options);   //切换后关闭弹窗
 $("cb1_explain").addEventListener("click",explain);
 
 $("cb_autosync").addEventListener("click",save_options);      //自动同步云端数据
@@ -47,6 +48,7 @@ function save_options() {
         browser.storage.local.set({[custom_search_id] : $(custom_search_id).value});
     }
     browser.storage.local.set({"cb_switch" : $("cb_switch").checked?"checked":"no"});
+    browser.storage.local.set({"cb_pop_close" : $("cb_pop_close").checked?"checked":"no"});
     browser.storage.local.set({"cb_autosync" : $("cb_autosync").checked?"checked":"no"});
     
     var statusDiv=document.createElement("div");

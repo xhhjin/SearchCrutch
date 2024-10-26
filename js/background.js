@@ -11,13 +11,6 @@ function checkForValidUrl(tabId, changeInfo, tab) {
             browser.action.enable(tabId);
             return;
         }
-        if (-1 < tab.url.substr(7, 25).indexOf("www.google.com/reader")) {
-            browser.action.setPopup({ popup: "", tabId: tabId });
-            browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tabId });
-            browser.action.setTitle({ title: "一键切换HTTP/HTTPS", tabId: tabId });
-            browser.action.enable(tabId);
-            return;
-        }
         insertCustomArray();
         var host = GetHost(tab.url);
         var i_host = inHostArray(host);
@@ -47,17 +40,7 @@ browser.tabs.onUpdated.addListener(checkForValidUrl);
 
 function ActionClick(tab) {
     browser.storage.local.get(null, function (result) {
-        if (-1 < tab.url.substr(7, 25).indexOf("www.google.com/reader")) {
-            var oldurl = tab.url;
-            var newurl = oldurl;
-            if ("http" == oldurl.substr(0, 4)) {
-                if ("https" == oldurl.substr(0, 5))
-                    newurl = "http" + oldurl.substr(5);
-                else
-                    newurl = "https" + oldurl.substr(4);
-            }
-            browser.tabs.update(tab.id, { url: newurl }, function () { });
-        } else if ("checked" == result["cb_switch"]) {
+        if ("checked" == result["cb_switch"]) {
             browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
             var index = 0;
             insertCustomArray();
@@ -231,6 +214,8 @@ browser.storage.local.get(null, function (result) {
             browser.storage.local.set({ "cb_autosync": "checked" });
         if (undefined == result["cb_switch"])
             browser.storage.local.set({ "cb_switch": "no" });
+        if (undefined == result["cb_pop_close"])
+            browser.storage.local.set({ "cb_pop_close": "no" });
 
         for (var i = 0; i < search_custom_num; i++) { // 6 = search_custom_num
             var custom_name_id = "custom_name_" + i;

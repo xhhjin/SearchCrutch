@@ -163,6 +163,7 @@ function dataBackup() {
             data[custom_search_id] = result[ custom_search_id ];
         }
         data["cb_switch"] = result[ "cb_switch" ];
+        data["cb_pop_close"] = result[ "cb_pop_close" ];
         data["cb_autosync"] = result[ "cb_autosync" ];
         data["backup_data"] = true;
         if(isChrome) {
@@ -218,12 +219,18 @@ function dataRecover() {
         browser.storage.sync.get("cb_switch", function (item) { 
             browser.storage.local.set({"cb_switch" : item.cb_switch});
         });
+        browser.storage.sync.get("cb_pop_close", function (item) { 
+            browser.storage.local.set({"cb_pop_close" : item.cb_pop_close});
+        });
         browser.storage.sync.get("cb_autosync", function (item) { 
             browser.storage.local.set({"cb_autosync" : item.cb_autosync});
         });
     } else {
         browser.storage.sync.get("cb_switch").then( (item) => { 
             browser.storage.local.set({"cb_switch" : item.cb_switch});
+        }, null);
+        browser.storage.sync.get("cb_pop_close").then( (item) => { 
+            browser.storage.local.set({"cb_pop_close" : item.cb_pop_close});
         }, null);
         browser.storage.sync.get("cb_autosync").then( (item) => { 
             browser.storage.local.set({"cb_autosync" : item.cb_autosync});

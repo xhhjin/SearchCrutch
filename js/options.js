@@ -22,6 +22,10 @@ function restore_options() {
             $( "cb_switch" ).checked = "";
         else
             $( "cb_switch" ).checked = "checked";
+        if( "no" ==  result["cb_pop_close"] )
+            $( "cb_pop_close" ).checked = "";
+        else
+            $( "cb_pop_close" ).checked = "checked";
         if( "no" ==  result["cb_autosync"] )
             $( "cb_autosync" ).checked = "";
         else
