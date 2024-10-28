@@ -37,19 +37,21 @@ $("cb_download").addEventListener("click",download_options);  //下载云端同�
 // Saves options to localStorage.
 function save_options() {
     var i;
+    var data = new Object();
     for( i=0; i<searchselect_array.length+search_custom_num; i++ ) {
         var cb_id = "cb_" + i;
-        browser.storage.local.set({[cb_id] : $(cb_id).checked?"checked":"no"});
+        data[cb_id] = $(cb_id).checked?"checked":"no";
     }
     for( i=0; i<search_custom_num; i++ ) {
         var custom_name_id = "custom_name_" + i;
         var custom_search_id = "custom_search_" + i;
-        browser.storage.local.set({[custom_name_id] : $(custom_name_id).value});
-        browser.storage.local.set({[custom_search_id] : $(custom_search_id).value});
+        data[custom_name_id] = $(custom_name_id).value;
+        data[custom_search_id] = $(custom_search_id).value;
     }
-    browser.storage.local.set({"cb_switch" : $("cb_switch").checked?"checked":"no"});
-    browser.storage.local.set({"cb_pop_close" : $("cb_pop_close").checked?"checked":"no"});
-    browser.storage.local.set({"cb_autosync" : $("cb_autosync").checked?"checked":"no"});
+    data["cb_switch"] = $("cb_switch").checked?"checked":"no";
+    data["cb_pop_close"] = $("cb_pop_close").checked?"checked":"no";
+    data["cb_autosync"] = $("cb_autosync").checked?"checked":"no";
+    browser.storage.local.set(data);
     
     var statusDiv=document.createElement("div");
     statusDiv.textContent = "选项已保存";

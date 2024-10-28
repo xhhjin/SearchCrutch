@@ -206,31 +206,30 @@ browser.storage.onChanged.addListener(function (changes, area) {
 
 var firstRun = "false";
 browser.storage.local.get(null, function (result) {
+    var data = new Object();
     if (undefined == result["firstRun"])
         firstRun = "true";
     if (firstRun == "true") {
         browser.tabs.create({ url: "options.html" }, function () { });
-        if (undefined == result["cb_autosync"])
-            browser.storage.local.set({ "cb_autosync": "checked" });
-        if (undefined == result["cb_switch"])
-            browser.storage.local.set({ "cb_switch": "no" });
-        if (undefined == result["cb_pop_close"])
-            browser.storage.local.set({ "cb_pop_close": "no" });
+        data["cb_autosync"] = "checked";
+        data["cb_switch"] = "no";
+        data["cb_pop_close"] = "no";
 
         for (var i = 0; i < search_custom_num; i++) { // 6 = search_custom_num
             var custom_name_id = "custom_name_" + i;
             var custom_search_id = "custom_search_" + i;
-            browser.storage.local.set({ [custom_name_id]: "" });
-            browser.storage.local.set({ [custom_search_id]: "" });
+            data[custom_name_id] = "";
+            data[custom_search_id] = "";
         }
         for (i = 0; i < search_array.length + search_custom_num; i++) { // 13 = search_array.length+search_custom_num   
             var cb_id = "cb_" + i;
-            browser.storage.local.set({ [cb_id]: "no" });
+            data[cb_id] = "no";
         }
-        browser.storage.local.set({ "cb_0": "checked" });
-        browser.storage.local.set({ "cb_2": "checked" });
-        browser.storage.local.set({ "cb_3": "checked" });
-        browser.storage.local.set({ "firstRun": "false" });
+        data["cb_0"] = "checked";
+        data["cb_2"] = "checked";
+        data["cb_3"] = "checked";
+        data["firstRun"] = "false";
+        browser.storage.local.set(data);
 
         // Sync the backup data
         browser.storage.sync.get("backup_data", function (item) {
