@@ -39,14 +39,15 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 browser.tabs.onUpdated.addListener(checkForValidUrl);
 
 function ActionClick(tab) {
+    browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
     browser.storage.local.get(null, function (result) {
         if ("checked" == result["cb_switch"]) {
-            browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
             var index = 0;
             insertCustomArray();
             var host = GetHost(tab.url);
             var i_host = inHostArray(host);
             index = searchhost_array[i_host][1];
+            index_old = index;
             for (var i = 0; i < search_array.length; i++) {
                 index++;
                 if (index >= search_array.length)
@@ -56,7 +57,7 @@ function ActionClick(tab) {
                     break;
             }
             var q = "";
-            var args = GetUrlParms(tab.url);
+            var args = GetUrlParms(tab.url, searchselect_array[index_old]);
             var search_key = searchselect_array[searchhost_array[i_host][1]][2];
             if (-1 < i_host) {
                 if (search_key == "%s") {
@@ -91,7 +92,7 @@ function ActionClick(tab) {
 
             browser.tabs.update(tab.id, { url: newurl }, function () { });
         } else {
-            args = GetUrlParms(tab.url);
+            args = GetUrlParms(tab.url, null);
             var ori_url = args["url"];
             if (ori_url)
                 browser.tabs.update(tab.id, { url: decodeURIComponent(ori_url) }, function () { });
@@ -108,8 +109,8 @@ function ActionClick(tab) {
 browser.action.onClicked.addListener(ActionClick);
 
 function ActionShortcut(tab, flag) {
+    browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
     browser.storage.local.get(null, function (result) {
-        browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
         var index = 0;
         insertCustomArray();
         var host = GetHost(tab.url);
@@ -117,6 +118,7 @@ function ActionShortcut(tab, flag) {
         if (0 > i_host)
             return;
         index = searchhost_array[i_host][1];
+        index_old = index;
         for (var i = 0; i < search_array.length; i++) {
             switch (flag) {
                 case "switch-pre":
@@ -136,7 +138,7 @@ function ActionShortcut(tab, flag) {
                 break;
         }
         var q = "", newurl;
-        var args = GetUrlParms(tab.url);
+        var args = GetUrlParms(tab.url, searchselect_array[index_old]);
         var search_key = searchselect_array[searchhost_array[i_host][1]][2];
         if (-1 < i_host) {
             if (search_key == "%s") {

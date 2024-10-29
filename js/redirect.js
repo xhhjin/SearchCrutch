@@ -25,7 +25,7 @@ function redirect(index) {
         insertCustomArray();
         var host = GetHost(tab.url);
         var i_host = inHostArray(host);
-        var args = GetUrlParms(tab.url);
+        var args = GetUrlParms(tab.url, searchselect_array[searchhost_array[i_host][1]]);
         var search_key = searchselect_array[searchhost_array[i_host][1]][2];
         if (-1 < i_host) {
             if (search_key == "%s") {

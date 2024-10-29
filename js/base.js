@@ -88,34 +88,44 @@ function inHostArray(host) {
     }
     return -1;
 }
-function GetUrlParms(hrefstr) {
+function GetUrlParms(hrefstr, search_old_pattern) {
     var args = new Object();
     hrefstr = decodeURI(hrefstr);
+
+    // 针对一些特殊得搜索结构，如:
+    // souku：http://so.youku.com/search_video/q_dd
+    // 维基百科：https://zh.wikipedia.org/wiki/dd
+    // 百度百科：https://baike.baidu.com/item/dd/14774512
+    if (search_old_pattern != null) {
+        var search_key_old = search_old_pattern[2];
+        var host_old = search_old_pattern[1].replace(/%s/i, "");
+        if (search_key_old == "%s" && !host_old.includes("=")) {
+            var pattern = new RegExp(host_old, "i");
+            hrefstr = hrefstr.replace(pattern, host_old + "?q=");  //在搜索词前添加 ?q=
+        }
+    }
+
     //针对Google的情况，防止关键字分错，https://www.google.co.uk/?gws_rd=ssl#q=dd    https://www.google.co.jp/?gws_rd=ssl,cr#q=dd
     hrefstr = hrefstr.replace(/\?gws_rd=([^#?&]+)/, "");
     //针对Google的情况 https://ipv4.google.com/sorry/index?continue=https://www.google.com.hk/search%3Fq%3Ddd    //https://ipv4.google.com/sorry/IndexRedirect?continue=https://www.google.com/search%3Fq%3Ddd
     if (hrefstr.match("//ipv4.google.com/") != null) {
         hrefstr = hrefstr.replace(/^https?:\/\/ipv4\.google\.com\/sorry\/([a-zA-Z0-9]+)\?continue=/, "");
-        hrefstr = unescape(hrefstr);
-    } else if (hrefstr.match("//www.soku.com/search_video/q_") != null) { //针对Soku的情况 http://www.soku.com/search_video/q_dd 替换 q_ 为 ?q=
-        var end = hrefstr.indexOf("?");
+        // hrefstr = unescape(hrefstr);
+    } else if (hrefstr.match("//so.youku.com/search_video/q_") != null) { //针对Soku
+        var end = hrefstr.indexOf("?", "http://so.youku.com/search_video/q_?q=".length)
         if (end > 0)
-            hrefstr = hrefstr.substring(0, end);    // 移除?之后的内容 http://www.soku.com/search_video/q_dd?f=1
-        hrefstr = hrefstr.replace(/^https?:\/\/www\.soku\.com\/search_video\/q_/, "http://www.soku.com/search_video/?q=");
-    } else if (hrefstr.match("//s.weibo.com/weibo/") != null) { //针对微博搜索的情况 http://s.weibo.com/weibo/dd 添加 ?q=
-        hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/weibo\//, "http://s.weibo.com/weibo/?q=");
-    } else if (hrefstr.match("//s.weibo.com/user/") != null) {  //针对微博搜索的情况 http://s.weibo.com/user/dd 添加 ?q=
-        hrefstr = hrefstr.replace(/^https?:\/\/s\.weibo\.com\/user\//, "http://s.weibo.com/user/?q=");
-    } else if (hrefstr.match("//www.acfun.cn/search/") != null) {  //针对AcFun搜索的情况 http://www.acfun.cn/search/?#page=1;query=dd;type=video 替换 query 之前的内容为 ?query
-        hrefstr = hrefstr.replace(/^https?:\/\/www\.acfun\.cn\/search\/(.+)query=/, "http://www.acfun.cn/search/?query=");
-        hrefstr = hrefstr.replace(";", "&");
+            hrefstr = hrefstr.substring(0, end);    // 移除?之后的内容 http://so.youku.com/search_video/q_?q=dd?f=1
+    } else if (hrefstr.match("//baike.baidu.com/item") != null) {  //针对百度百科
+        var end = hrefstr.indexOf("/", "http://baike.baidu.com/item/q_?q=".length)
+        if (end > 0)
+            hrefstr = hrefstr.substring(0, end);    // 移除dd/之后的内容 https://baike.baidu.com/item/?q=dd/14774512
     }
     var pos = hrefstr.indexOf("?");
     if (0 > pos)
         pos = hrefstr.indexOf("#");//针对Google的情况，没找到时重找一次： https://www.google.com.hk/#q=dd
-    if (0 > pos)
+    if (0 > pos) {
         pos = hrefstr.indexOf("&");//针对Google出错时的情况，寻找关键字： https://www.google.com.hk/search&q=dd
-    if (0 < pos) {
+    } else {
         var query = hrefstr.substring(pos + 1);
         var pairs = query.split("&");//在逗号处断开   
         for (var i = 0; i < pairs.length; i++) {
