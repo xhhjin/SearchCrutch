@@ -1,11 +1,11 @@
-/* global search_custom_num search_array searchselect_array */
+/* global search_custom_num searchselect_array */
 window.addEventListener("load", onLoad);
 
 function onLoad() {
     browser.storage.local.get(null, function (result) {
         window.removeEventListener("load", onLoad, false);
         for (var i = 0; i < search_custom_num; i++) {
-            var id = search_array.length + i;
+            var id = searchselect_array.length + i;
             var a_id = "a_" + id;
             $(a_id).textContent = result["custom_name_" + i];
         }
