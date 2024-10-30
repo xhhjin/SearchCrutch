@@ -1,6 +1,6 @@
 importScripts('./base.js');
 
-/* global insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array search_array isEmpty search_custom_num dataBackup dataRecover */
+/* global GetUrlParms search_array isEmpty search_custom_num getRedirectUrl dataBackup dataRecover */
 function checkForValidUrl(tabId, changeInfo, tab) {
     if (!changeInfo.status)
         return;
@@ -11,12 +11,10 @@ function checkForValidUrl(tabId, changeInfo, tab) {
             browser.action.enable(tabId);
             return;
         }
-        insertCustomArray();
-        var host = GetHost(tab.url);
-        var i_host = inHostArray(host);
-        if (-1 < i_host) {
+        var index = getUrlSearchIndex(tab.url);
+        if (-1 < index) {
             //for direct visit from google refer url
-            if ((1 == searchhost_array[i_host][1] || 0 == searchhost_array[i_host][1]) && (10 < tab.url.indexOf("url?") || 10 < tab.url.indexOf("imgres?"))) {
+            if ((1 == index || 0 == index) && (10 < tab.url.indexOf("url?") || 10 < tab.url.indexOf("imgres?"))) {
                 browser.action.setPopup({ popup: "", tabId: tabId });
                 browser.action.setIcon({ path: "../img/icon-38-g.png", tabId: tabId });
                 browser.action.setTitle({ title: "直接访问所在网页", tabId: tabId });
@@ -42,12 +40,9 @@ function ActionClick(tab) {
     browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
     browser.storage.local.get(null, function (result) {
         if ("checked" == result["cb_switch"]) {
-            var index = 0;
-            insertCustomArray();
-            var host = GetHost(tab.url);
-            var i_host = inHostArray(host);
-            index = searchhost_array[i_host][1];
-            index_old = index;
+            var index = getUrlSearchIndex(tab.url);
+            if (0 > index)
+                return;
             for (var i = 0; i < search_array.length; i++) {
                 index++;
                 if (index >= search_array.length)
@@ -56,43 +51,10 @@ function ActionClick(tab) {
                 if ("checked" == result[cb_id])
                     break;
             }
-            var q = "";
-            var args = GetUrlParms(tab.url, searchselect_array[index_old]);
-            var search_key = searchselect_array[searchhost_array[i_host][1]][2];
-            if (-1 < i_host) {
-                if (search_key == "%s") {
-                    search_key = searchselect_array[searchhost_array[i_host][1]][1];
-                    search_key = search_key.toLowerCase();
-                    search_key = search_key.substring(0, search_key.indexOf("%s"));
-                    search_key = search_key.match(/[^?#&/]*$/);
-                    if (search_key != null) {
-                        if (search_key[0].match("="))
-                            search_key = search_key[0].replace("=", "");
-                        else
-                            search_key = "q";
-                        q = args[search_key]; // search word
-                    } else {
-                        q = args["q"]; // Protection, should not step into this
-                    }
-                } else {
-                    q = args[search_key];
-                }
-            }
-            search_key = searchselect_array[index][2];
-            if (q) {
-                if (search_key == "%s") {
-                    newurl = searchselect_array[index][1].replace(/%s/i, q);
-                } else {
-                    newurl = searchselect_array[index][1] + q;
-                }
-
-            } else {
-                newurl = searchselect_array[index][3];
-            }
-
-            browser.tabs.update(tab.id, { url: newurl }, function () { });
+            var new_url = getRedirectUrl(tab.url, index);
+            browser.tabs.update(tab.id, { url: new_url }, function () { });
         } else {
-            args = GetUrlParms(tab.url, null);
+            args = getUrlParms(tab.url, null);
             var ori_url = args["url"];
             if (ori_url)
                 browser.tabs.update(tab.id, { url: decodeURIComponent(ori_url) }, function () { });
@@ -111,14 +73,9 @@ browser.action.onClicked.addListener(ActionClick);
 function ActionShortcut(tab, flag) {
     browser.action.setIcon({ path: "../img/icon-38-b.png", tabId: tab.id });
     browser.storage.local.get(null, function (result) {
-        var index = 0;
-        insertCustomArray();
-        var host = GetHost(tab.url);
-        var i_host = inHostArray(host);
-        if (0 > i_host)
+        var index = getUrlSearchIndex(tab.url);
+        if (0 > index)
             return;
-        index = searchhost_array[i_host][1];
-        index_old = index;
         for (var i = 0; i < search_array.length; i++) {
             switch (flag) {
                 case "switch-pre":
@@ -137,40 +94,9 @@ function ActionShortcut(tab, flag) {
             if ("checked" == result[cb_id])
                 break;
         }
-        var q = "", newurl;
-        var args = GetUrlParms(tab.url, searchselect_array[index_old]);
-        var search_key = searchselect_array[searchhost_array[i_host][1]][2];
-        if (-1 < i_host) {
-            if (search_key == "%s") {
-                search_key = searchselect_array[searchhost_array[i_host][1]][1];
-                search_key = search_key.toLowerCase();
-                search_key = search_key.substring(0, search_key.indexOf("%s"));
-                search_key = search_key.match(/[^?#&/]*$/);
-                if (search_key != null) {
-                    if (search_key[0].match("="))
-                        search_key = search_key[0].replace("=", "");
-                    else
-                        search_key = "q";
-                    q = args[search_key]; // search word
-                } else {
-                    q = args["q"]; // Protection, should not step into this
-                }
-            } else {
-                q = args[search_key];
-            }
-        }
-        search_key = searchselect_array[index][2];
-        if (q) {
-            if (search_key == "%s") {
-                newurl = searchselect_array[index][1].replace(/%s/i, q);
-            } else {
-                newurl = searchselect_array[index][1] + q;
-            }
-        } else {
-            newurl = searchselect_array[index][3];
-        }
+        var new_url = getRedirectUrl(tab.url, index);
 
-        browser.tabs.update(tab.id, { url: newurl }, function () { });
+        browser.tabs.update(tab.id, { url: new_url }, function () { });
     });
 }
 

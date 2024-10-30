@@ -1,4 +1,4 @@
-/* global $ insertCustomArray GetHost inHostArray GetUrlParms searchhost_array searchselect_array SetNowLink */
+/* global $ getRedirectUrl */
 $("a_0").addEventListener("click", CheckRedirect);        //谷歌
 $("a_1").addEventListener("click", CheckRedirect);        //替代谷歌的搜索引擎
 $("a_2").addEventListener("click", CheckRedirect);        //百度
@@ -15,54 +15,15 @@ $("a_12").addEventListener("click", CheckRedirect);       //自定义搜索6
 
 function CheckRedirect() {
     var index = this.id.substr("a_".length);
-    redirect(index);
-}
-
-function redirect(index) {
     browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         var tab = tabs[0];
-        var q = "", newurl;
-        insertCustomArray();
-        var host = GetHost(tab.url);
-        var i_host = inHostArray(host);
-        var args = GetUrlParms(tab.url, searchselect_array[searchhost_array[i_host][1]]);
-        var search_key = searchselect_array[searchhost_array[i_host][1]][2];
-        if (-1 < i_host) {
-            if (search_key == "%s") {
-                search_key = searchselect_array[searchhost_array[i_host][1]][1];
-                search_key = search_key.toLowerCase();
-                search_key = search_key.substring(0, search_key.indexOf("%s"));
-                search_key = search_key.match(/[^?#&/]*$/);
-                if (search_key != null) {
-                    if (search_key[0].match("="))
-                        search_key = search_key[0].replace("=", "");
-                    else
-                        search_key = "q";
-                    q = args[search_key]; // search word
-                } else {
-                    q = args["q"]; // Protection, should not step into this
-                }
-            } else {
-                q = args[search_key];
-            }
-        }
-        search_key = searchselect_array[index][2];
-        if (q) {
-            if (search_key == "%s") {
-                newurl = searchselect_array[index][1].replace(/%s/i, q);
-            } else {
-                newurl = searchselect_array[index][1] + q;
-            }
+        var new_url = getRedirectUrl(tab.url, index);
 
-        } else {
-            newurl = searchselect_array[index][3];
-        }
-
-        browser.tabs.update(tab.id, { url: newurl }, async function () {
+        browser.tabs.update(tab.id, { url: new_url }, async function () {
             var result = await browser.storage.local.get('cb_pop_close');
             if ("checked" == result["cb_pop_close"])
                 window.close();
         });
     });
-    SetNowLink(index);
+    setNowLink(index);
 }

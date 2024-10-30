@@ -1,4 +1,4 @@
-/* exported $ isEmpty insertCustomArray inHostArray GetUrlParms getSearch dataBackup dataRecover */
+/* exported $ isEmpty getUrlSearchIndex getUrlParms getRedirectUrl dataBackup dataRecover */
 function $(objStr) { return document.getElementById(objStr); }
 // Avoid 'chrome' namespace
 var isChrome = false; //On Chrome
@@ -61,7 +61,7 @@ function insertCustomArray() {
             var custom_name = result[custom_name_id];
             var custom_search = result[custom_search_id];
             search_array.push(insert_array);
-            insert_array = [GetHost(custom_search), 7 + i];
+            insert_array = [getHost(custom_search), 7 + i];
             searchhost_array.push(insert_array);
             var qstr_array = "q";
             var regexp = /[#?&]\w{1,7}=$|[#?&]\w{1,7}=&/g;  // q=    search=    keyword=
@@ -76,19 +76,38 @@ function insertCustomArray() {
                     qstr_array = "q";
                 }
             }
-            insert_array = [custom_name, custom_search, qstr_array, "http://" + GetHost(custom_search)];
+            insert_array = [custom_name, custom_search, qstr_array, "http://" + getHost(custom_search)];
             searchselect_array.push(insert_array);
         }
     });
 }
-function inHostArray(host) {
-    for (var i = 0; i < searchhost_array.length; i++) {
-        if (host.match(searchhost_array[i][0]) != null)
-            return i;
+function getHost(url) {
+    var pos = url.indexOf("//");
+    var host;
+    if (-1 < pos)
+        host = url.substr(pos + 2);
+    else
+        return "www.google.com.hk";
+    if (host.length > 0) {
+        pos = host.indexOf("/");
+        if (-1 < pos)
+            host = host.substr(0, pos);
     }
-    return -1;
+    return host.toLowerCase();
 }
-function GetUrlParms(hrefstr, search_old_pattern) {
+function getUrlSearchIndex(url) {
+    var index = -1;
+    insertCustomArray();
+    var host = getHost(url);
+    for (var i = 0; i < searchhost_array.length; i++) {
+        if (host.match(searchhost_array[i][0]) != null) {
+            index = searchhost_array[i][1];
+            break;
+        }
+    }
+    return index;
+}
+function getUrlParms(hrefstr, search_old_pattern) {
     var args = new Object();
     hrefstr = decodeURI(hrefstr);
 
@@ -140,27 +159,42 @@ function GetUrlParms(hrefstr, search_old_pattern) {
     }
     return args;
 }
-function GetHost(url) {
-    var pos = url.indexOf("//");
-    var host;
-    if (-1 < pos)
-        host = url.substr(pos + 2);
-    else
-        return "www.google.com.hk";
-    if (host.length > 0) {
-        pos = host.indexOf("/");
-        if (-1 < pos)
-            host = host.substr(0, pos);
-    }
-    return host.toLowerCase();
-}
-function getSearch(host) {
-    if (host) {
-        for (var i = 0; i < search_array.length; i++) {
-            if (-1 < host.indexOf(search_array[i]))
-                return search_array[i];
+function getRedirectUrl(tab_url, index_new) {
+    var q = "", new_url;
+    var index_old = getUrlSearchIndex(tab_url);
+    var args = getUrlParms(tab_url, searchselect_array[index_old]);
+    var search_key = searchselect_array[index_old][2];
+    if (-1 < index_old) {
+        if (search_key == "%s") {
+            search_key = searchselect_array[index_old][1];
+            search_key = search_key.toLowerCase();
+            search_key = search_key.substring(0, search_key.indexOf("%s"));
+            search_key = search_key.match(/[^?#&/]*$/);
+            if (search_key != null) {
+                if (search_key[0].match("="))
+                    search_key = search_key[0].replace("=", "");
+                else
+                    search_key = "q";
+                q = args[search_key]; // search word
+            } else {
+                q = args["q"]; // Protection, should not step into this
+            }
+        } else {
+            q = args[search_key];
         }
     }
+    search_key = searchselect_array[index_new][2];
+    if (q) {
+        if (search_key == "%s") {
+            new_url = searchselect_array[index_new][1].replace(/%s/i, q);
+        } else {
+            new_url = searchselect_array[index_new][1] + q;
+        }
+    } else {
+        new_url = searchselect_array[index_new][3];
+    }
+
+    return new_url;
 }
 function dataBackup() {
     browser.storage.local.get(null, function (result) {
